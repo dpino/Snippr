@@ -6,18 +6,19 @@ Before deploying this project you need to create an empty database. Default data
 Create database
 ---------------
 
-<code>
+<pre>
 > CREATE USER snippr WITH PASSWORD 'snippr';
 > CREATE DATABASE snipprdev;
 > GRANT ALL PRIVILEGES ON DATABASE snipprdev TO snippr;
-</code>
+</pre>
+
 
 Compile & deploy
 ----------------
 
-<code>
+<pre>
 $ mvn clean install
 $ mvn jetty:stop jetty:run
-</code>
+</pre>
 
 Open website at localhost:8080
