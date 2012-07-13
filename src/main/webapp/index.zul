@@ -1,7 +1,7 @@
 <!--
     This file is part of Snippr
 
-    Copyright (C) 2012 Igalia, S.L.
+    Copyright (C) 2011 Igalia, S.L.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -19,30 +19,8 @@
 
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/common/layout/template.zul"?>
 
-<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/common/css/snippr.css"?>
 
-<window self="@{define(content)}">
-    <borderlayout height="600px">
-        <west title="Groups" size="15%" flex="true" maxsize="250" splittable="true" collapsible="true">
-            <!-- Tags -->
-        </west>
+<div height="100%" width="100%" self="@{define(content)}">
 
-        <center border="none">
-            <borderlayout>
-                <north height="15%" flex="true">
-                    <!-- List snippets -->
-                </north>
-                <south height="85%" flex="true">
-                    <vbox>
-                        <hbox>
-                            <button id="btnAddCode" label="add code" />
-                            <button id="btnAddNote" label="add note" />
-                        </hbox>
-
-                        <!-- List code and notes -->
-                    </vbox>
-                </south>
-            </borderlayout>
-        </center>
-    </borderlayout>
-</window>
+</div>

@@ -1,7 +1,7 @@
 <!--
-    This file is part of Snippr
+    This file is part of Snipper
 
-    Copyright (C) 2012 Igalia, S.L.
+    Copyright (C) 2011 Igalia, S.L.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -17,16 +17,36 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+<?link rel="stylesheet" type="text/css" href="/common/css/snippr.css"?>
+
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 
-<zk xmlns:n="http://www.zkoss.org/2005/zk/native">
-    <borderlayout>
-        <north>
-            <n:h2>Snippr</n:h2>
-        </north>
-        <center self="@{insert(content)}" />
-        <south>
-            <n:p>Footer</n:p>
-        </south>
-    </borderlayout>
+<zk>
+
+    <div xmlns:n="http://www.zkoss.org/2005/zk/native" height="100%">
+        <borderlayout height="100%" width="100%">
+            <north border="none">
+                <div>
+                    <n:h2>Snippr</n:h2>
+
+                    <menubar>
+                        <menu label="Entities">
+                            <menupopup>
+                                <menuitem label="Snippets" href="/"/>
+                                <menuitem label="Comments" href="/"/>
+                                <menuitem label="Notes" href="/"/>
+                            </menupopup>
+                        </menu>
+                    </menubar>
+                </div>
+            </north>
+
+            <center self="@{insert(content)}" />
+
+            <south border="none">
+                <n:p>Igalia @ Some rights reserved</n:p>
+            </south>
+        </borderlayout>
+    </div>
+
 </zk>
