@@ -1,11 +1,11 @@
-.notificationMessage {
+.info {
     padding: 3px;
     color: black;
     font-weight: bold;
     background: #FFF1A8;
 }
 
-.errorMessage {
+.error {
     padding: 3px;
     color: black;
     font-weight: bold;
