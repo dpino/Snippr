@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.snippr.business.entities" default-access="field">
+
+    <!-- User -->
+    <class name="User" table="users">
+        <id name="id" access="property">
+            <generator class="native" />
+        </id>
+
+        <property name="firstName" column="first_name" />
+        <property name="lastName" column="last_name" />
+        <property name="username" column="user_name" unique="true" />
+        <property name="password" column="password" />
+        <property name="email" column="email" />
+        <property name="enabled" column="enabled" />
+        <property name="accountNonExpired" column="account_non_expired" />
+        <property name="credentialsNonExpired" column="credentials_non_expired" />
+        <property name="accountNonLocked" column="account_non_locked" />
+    </class>
+
+    <!-- TODO create the authorities table and the user relations -->
+
+</hibernate-mapping>

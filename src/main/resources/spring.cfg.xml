@@ -31,7 +31,9 @@
         p:dataSource-ref="dataSource" p:configLocation="classpath:/hibernate.cfg.xml">
         <property name="mappingResources">
             <list>
-
+                <value>
+                    org/snippr/business/entities/Snippr.hbm.xml
+                </value>
             </list>
         </property>
     </bean>
