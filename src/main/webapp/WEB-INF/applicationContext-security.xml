@@ -16,13 +16,5 @@
         <authentication-provider user-service-ref='authenticationProvider'/>
     </authentication-manager>
 
-    <beans:bean id="authenticationProvider" class="org.snippr.web.users.services.DBUserDetailsService">
-        <!-- <custom-authentication-provider /> -->
-    </beans:bean>
-
-    <!--
-    <beans:bean id="passwordEncoder" class="org.snippr.web.users.services.DBUserDetailsService"/> 
-    <beans:bean id="saltSource" class="org.snippr.web.users.services.DBUserDetailsService"/> 
-    <beans:bean id="dbUserDetailsService" class="org.snippr.web.users.services.DBUserDetailsService"/>
-     -->
+		<beans:bean id="authenticationProvider" class="org.snippr.web.users.services.DBUserDetailsService" />
 </beans:beans>
