@@ -27,9 +27,9 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * 
+ *
  * @author Antonio Arias <antonio.arias@gmail.com>
- * 
+ *
  */
 public class User extends BaseEntity implements UserDetails {
     private static final long serialVersionUID = -7594388337646930762L;
