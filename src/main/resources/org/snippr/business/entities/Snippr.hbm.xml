@@ -22,4 +22,14 @@
 
     <!-- TODO create the authorities table and the user relations -->
 
+    <!-- Snippet -->
+    <class name="Snippet" table="snippet">
+        <id name="id" access="property">
+            <generator class="native" />
+        </id>
+
+        <property name="title" unique="true" />
+        <property name="description" />
+    </class>
+
 </hibernate-mapping>
