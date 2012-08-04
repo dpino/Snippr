@@ -18,8 +18,6 @@
  */
 package org.snippr.business.dao;
 
-import java.util.List;
-
 import org.hibernate.id.IdentifierGenerator;
 import org.snippr.business.entities.Snippet;
 
@@ -31,12 +29,6 @@ import org.snippr.business.entities.Snippet;
  *
  */
 public interface ISnippetDAO extends IGenericDAO<Snippet, Long>, IdentifierGenerator {
-
-    /**
-     * Returns the list of snippets from the database
-     * @return List<Snippet>
-     */
-    List<Snippet> getAll();
 
     /**
      * Verifies that the snippet exists in the database

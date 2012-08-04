@@ -19,8 +19,6 @@
 
 package org.snippr.business.dao;
 
-import java.util.List;
-
 import org.snippr.business.entities.User;
 
 /**
@@ -29,8 +27,6 @@ import org.snippr.business.entities.User;
  *
  */
 public interface IUserDAO extends IGenericDAO<User, Long> {
-
-    List<User> getAll();
 
     User getByUsername(String username);
 

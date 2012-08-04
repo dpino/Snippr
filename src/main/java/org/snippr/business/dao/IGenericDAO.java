@@ -57,4 +57,9 @@ public interface IGenericDAO<E, PK extends Serializable> {
      * @param entity
      */
     public void reattach(E entity);
+
+    List<E> getAll(Class<?> c, String orderBy);
+
+    List<E> getAll();
+
 }

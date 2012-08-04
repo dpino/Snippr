@@ -19,18 +19,15 @@
 package org.snippr.business.dao;
 
 import java.io.Serializable;
-import java.util.List;
 
-import org.snippr.business.entities.Snippet;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.engine.SessionImplementor;
+import org.snippr.business.entities.Snippet;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -44,17 +41,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Scope(BeanDefinition.SCOPE_SINGLETON)
 public class SnippetDAO extends GenericDAOHibernate<Snippet, Long> implements
         ISnippetDAO {
-
-    /* (non-Javadoc)
-     * @see org.snippr.business.dao.ISnippetDAO#getAll()
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Snippet> getAll() {
-        Criteria criteria = getSession().createCriteria(Snippet.class);
-        criteria.addOrder(Order.asc("title"));
-        return criteria.list();
-    }
 
     /* (non-Javadoc)
      * @see org.snippr.business.dao.ISnippetDAO#exists(org.snippr.business.entities.Snippet)

@@ -19,10 +19,7 @@
 
 package org.snippr.business.dao;
 
-import java.util.List;
-
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.snippr.business.entities.User;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -39,14 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Scope(BeanDefinition.SCOPE_SINGLETON)
 public class UserDAO extends GenericDAOHibernate<User, Long> implements
         IUserDAO {
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<User> getAll() {
-        Criteria criteria = getSession().createCriteria(User.class);
-        criteria.addOrder(Order.asc("id"));
-        return criteria.list();
-    }
 
     @Override
     @Transactional(readOnly = true)

@@ -23,14 +23,15 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import org.snippr.business.entities.BaseEntity;
-import org.snippr.business.exceptions.InstanceNotFoundException;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.snippr.business.entities.BaseEntity;
+import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An implementation of <code>IGenericDao</code> based on Hibernate's native
@@ -106,4 +107,18 @@ public class GenericDAOHibernate<E extends BaseEntity, PK extends Serializable>
     public void reattach(E entity) {
         getSession().saveOrUpdate(entity);
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<E> getAll(Class<?> c, String orderBy) {
+        Criteria criteria = getSession().createCriteria(c);
+        criteria.addOrder(Order.asc(orderBy));
+        return criteria.list();
+    }
+
+    @Override
+    public List<E> getAll() {
+        return getAll(BaseEntity.class, "id");
+    }
+
 }
