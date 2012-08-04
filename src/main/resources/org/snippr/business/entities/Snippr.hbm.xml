@@ -32,4 +32,15 @@
         <property name="description" />
     </class>
 
+    <!-- SnippetCode -->
+    <class name="SnippetCode" table="snippet_code">
+        <id name="id" access="property">
+            <generator class="native" />
+        </id>
+
+        <property name="code" unique="false" />
+        <many-to-one name="snippet" class="org.snippr.business.entities.Snippet"
+            column="snippet_id" not-null="true" />
+    </class>
+
 </hibernate-mapping>
