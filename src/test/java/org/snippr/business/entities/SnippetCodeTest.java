@@ -17,7 +17,8 @@ public class SnippetCodeTest {
 
         SnippetCode snippetCode = new SnippetCode(code, testSnippet);
         String result = snippetCode.toString();
-        assertEquals("Testing Snippet instance ...", "Snippet [code=" + code
+        assertEquals("Testing SnippetCode instance ...", "SnippetCode [code="
+                + code
                 + ", snippet=" + testSnippet.toString() + "]", result);
     }
 
