@@ -17,25 +17,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.snippr.business.entities;
+package org.snippr.web.model;
 
-public class Label extends BaseEntity {
+import java.util.List;
 
-    private String name;
+import org.snippr.business.entities.Label;
+import org.snippr.business.exceptions.DuplicateName;
+import org.snippr.business.exceptions.InstanceNotFoundException;
 
-    public Label() {
-    }
+public interface ILabelModel {
 
-    public Label(String name) {
-        this.name = name;
-    }
+    List<Label> getAll();
 
-    public String getName() {
-        return name;
-    }
+    Label getLabel();
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    void delete(Label label) throws InstanceNotFoundException;
+
+    void save() throws DuplicateName;
+
+    void prepareForCreate();
+
+    void prepareForEdit(Long id) throws InstanceNotFoundException;
+
+    void setLabel(Label label);
 
 }

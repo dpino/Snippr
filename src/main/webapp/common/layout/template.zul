@@ -34,7 +34,7 @@
                             <menupopup>
                                 <menuitem label="Snippets" href="/"/>
                                 <menuitem label="Comments" href="/comments/comments.zul"/>
-                                <menuitem label="Notes" href="/"/>
+                                <menuitem label="Labels" href="/labels/labels.zul" />
                             </menupopup>
                         </menu>
                     </menubar>
