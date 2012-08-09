@@ -29,6 +29,8 @@
                 onClick="controller.openEditForm(self.value)">
                 <label value="@{label.name}" />
                 <hbox>
+                    <button label="Edit" tooltiptext="Edit"
+                        onClick="controller.openEditForm(self.parent.parent.value)" />
                     <button label="Delete" tooltiptext="Delete"
                         onClick="controller.delete(self.parent.parent.value)" />
                 </hbox>
