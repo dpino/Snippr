@@ -1,46 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="org.snippr.business.entities" default-access="field">
+<hibernate-mapping package="org.snippr.business.entities"
+	default-access="field">
 
-    <!-- User -->
-    <class name="User" table="users">
-        <id name="id" access="property">
-            <generator class="native" />
-        </id>
+	<!-- User -->
+	<class name="User" table="users">
+		<id name="id" access="property">
+			<generator class="native" />
+		</id>
 
-        <property name="firstName" column="first_name" />
-        <property name="lastName" column="last_name" />
-        <property name="username" column="user_name" unique="true" />
-        <property name="password" column="password" />
-        <property name="email" column="email" />
-        <property name="enabled" column="enabled" />
-        <property name="accountNonExpired" column="account_non_expired" />
-        <property name="credentialsNonExpired" column="credentials_non_expired" />
-        <property name="accountNonLocked" column="account_non_locked" />
-    </class>
+		<property name="firstName" column="first_name" />
+		<property name="lastName" column="last_name" />
+		<property name="username" column="user_name" unique="true" />
+		<property name="password" column="password" />
+		<property name="email" column="email" />
+		<property name="enabled" column="enabled" />
+		<property name="accountNonExpired" column="account_non_expired" />
+		<property name="credentialsNonExpired" column="credentials_non_expired" />
+		<property name="accountNonLocked" column="account_non_locked" />
+	</class>
 
-    <!-- TODO create the authorities table and the user relations -->
+	<!-- TODO create the authorities table and the user relations -->
 
-    <!-- Snippet -->
-    <class name="Snippet" table="snippet">
-        <id name="id" access="property">
-            <generator class="native" />
-        </id>
+	<!-- Snippet -->
+	<class name="Snippet" table="snippet">
+		<id name="id" access="property">
+			<generator class="native" />
+		</id>
 
-        <property name="title" unique="true" />
-        <property name="description" />
-    </class>
+		<property name="title" unique="true" />
+		<property name="description" />
+	</class>
 
-    <!-- SnippetCode -->
-    <class name="SnippetCode" table="snippet_code">
-        <id name="id" access="property">
-            <generator class="native" />
-        </id>
+	<!-- SnippetCode -->
+	<class name="SnippetCode" table="snippet_code">
+		<id name="id" access="property">
+			<generator class="native" />
+		</id>
 
-        <property name="code" unique="false" />
-        <many-to-one name="snippet" class="org.snippr.business.entities.Snippet"
-            column="snippet_id" not-null="true" />
-    </class>
+		<property name="code" unique="false" />
+		<many-to-one name="snippet" class="org.snippr.business.entities.Snippet"
+			column="snippet_id" not-null="true" />
+	</class>
+
+	<!-- Label -->
+	<class name="Label" table="label">
+		<id name="id" access="property">
+			<generator class="native" />
+		</id>
+
+		<property name="name" unique="false" />
+	</class>
 
 </hibernate-mapping>
