@@ -28,7 +28,7 @@ import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.snippr.web.common.Notificator;
 import org.snippr.web.common.OnlyOneVisible;
 import org.snippr.web.common.Util;
-import org.snippr.web.model.LabelModel;
+import org.snippr.web.model.ILabelModel;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
@@ -47,7 +47,7 @@ public class LabelCRUDController extends GenericForwardComposer {
 
     private Notificator notificator;
 
-    private LabelModel labelModel;
+    private ILabelModel labelModel;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
