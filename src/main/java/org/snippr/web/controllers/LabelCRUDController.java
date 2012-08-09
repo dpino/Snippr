@@ -94,8 +94,8 @@ public class LabelCRUDController extends GenericForwardComposer {
         showEditWindow(String.format("Edit Label: %s", label.getName()));
     }
 
-    public void delete(Label car) throws InstanceNotFoundException {
-        labelModel.delete(car);
+    public void delete(Label label) throws InstanceNotFoundException {
+        labelModel.delete(label);
         Util.reloadBindings(listWindow);
     }
 
