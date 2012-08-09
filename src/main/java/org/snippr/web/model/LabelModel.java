@@ -21,23 +21,29 @@ package org.snippr.web.model;
 
 import java.util.List;
 
+import org.snippr.business.dao.ILabelDAO;
 import org.snippr.business.entities.Label;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
-import org.snippr.web.common.LabelCatalogSingleton;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class LabelModel implements ILabelModel {
 
+    @Autowired
+    private ILabelDAO labelDAO;
+
     private Label label;
 
     @Override
+    @Transactional
     public List<Label> getAll() {
-        return (List<Label>) LabelCatalogSingleton.instanceOf().getLabels();
+        return labelDAO.getAll();
     }
 
     @Override
@@ -46,13 +52,20 @@ public class LabelModel implements ILabelModel {
     }
 
     @Override
+    @Transactional
     public void delete(Label label) throws InstanceNotFoundException {
-        LabelCatalogSingleton.instanceOf().removeLabel(label.getId());
+        labelDAO.remove(label.getId());
     }
 
     @Override
+    @Transactional
     public void save() throws DuplicateName {
-        LabelCatalogSingleton.instanceOf().insertLabel(label);
+        if (label.getId() == null && labelDAO.exists(label)) {
+            throw new DuplicateName();
+        }
+        if (!label.getName().isEmpty()) {
+            labelDAO.save(label);
+        }
     }
 
     @Override
@@ -61,8 +74,9 @@ public class LabelModel implements ILabelModel {
     }
 
     @Override
+    @Transactional
     public void prepareForEdit(Long id) throws InstanceNotFoundException {
-        label = LabelCatalogSingleton.instanceOf().getLabel(id);
+        label = labelDAO.find(id);
     }
 
     @Override
