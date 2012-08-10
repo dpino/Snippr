@@ -21,9 +21,10 @@ package org.snippr.business.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -43,14 +44,8 @@ public class User extends BaseEntity implements UserDetails {
     private boolean accountNonExpired;
     private boolean credentialsNonExpired;
     private boolean accountNonLocked;
+    private Set<Role> roles = new HashSet<Role>(0);
     private Collection<GrantedAuthority> authorities;
-
-    public User() {
-        super();
-        // TODO improve the authorities management
-        this.authorities = new ArrayList<GrantedAuthority>();
-        this.authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
-    }
 
     public User invalidate() {
         enabled = true;
@@ -103,8 +98,16 @@ public class User extends BaseEntity implements UserDetails {
         return accountNonLocked;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
+        this.authorities = new ArrayList<GrantedAuthority>();
+        for (Role role : roles) {
+            this.authorities.add(role.getGrantedAuthority());
+        }
         return authorities;
     }
 

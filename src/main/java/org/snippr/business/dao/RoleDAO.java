@@ -19,13 +19,10 @@
 
 package org.snippr.business.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.snippr.business.entities.User;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -34,24 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Scope(BeanDefinition.SCOPE_SINGLETON)
-public class UserDAO extends GenericDAOHibernate<User, Long> implements
-        IUserDAO {
-
-    @Override
-    @Transactional(readOnly = true)
-    public User getByUsername(String username) {
-        Criteria criteria = getSession().createCriteria(User.class);
-        criteria.add(Restrictions.eq("username", username));
-        criteria.createCriteria("roles");
-        criteria.setMaxResults(1);
-        User user = null;
-        if (!criteria.list().isEmpty()) {
-            user = (User) criteria.list().get(0);
-        } else {
-            user = new User().invalidate();
-        }
-
-        return user;
-    }
+public class RoleDAO extends GenericDAOHibernate<User, Long> implements
+        IRoleDAO {
 
 }
