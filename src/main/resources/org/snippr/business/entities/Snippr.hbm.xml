@@ -39,7 +39,7 @@
 			<generator class="native" />
 		</id>
 
-		<property name="code" unique="false" />
+		<property name="code" unique="false" type="text" />
 		<many-to-one name="snippet" class="org.snippr.business.entities.Snippet"
 			column="snippet_id" not-null="true" />
 	</class>
