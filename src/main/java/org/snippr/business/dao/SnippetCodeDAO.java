@@ -18,14 +18,11 @@
  */
 package org.snippr.business.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.engine.SessionImplementor;
 import org.snippr.business.entities.SnippetCode;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -36,7 +33,7 @@ import org.springframework.stereotype.Repository;
  * Database DAO class for SnippetCode
  *
  * @author Jorge Muñoz Castañer
- * @version 20120804
+ * @version 20120811
  *
  */
 @Repository
@@ -69,13 +66,6 @@ public class SnippetCodeDAO extends GenericDAOHibernate<SnippetCode, Long>
         Criteria criteria = getSession().createCriteria(SnippetCode.class);
         criteria.add(Restrictions.eq("code", snippetCode.getCode()));
         return !criteria.list().isEmpty();
-    }
-
-    @Override
-    public Serializable generate(SessionImplementor session, Object object)
-            throws HibernateException {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

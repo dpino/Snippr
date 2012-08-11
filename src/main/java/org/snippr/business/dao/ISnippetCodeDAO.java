@@ -20,18 +20,16 @@ package org.snippr.business.dao;
 
 import java.util.List;
 
-import org.hibernate.id.IdentifierGenerator;
 import org.snippr.business.entities.SnippetCode;
 
 /**
  * Interface for the DAO class of SnippetCode
  *
  * @author Jorge Muñoz Castañer
- * @version 20120804
+ * @version 20120811
  *
  */
-public interface ISnippetCodeDAO extends IGenericDAO<SnippetCode, Long>,
-        IdentifierGenerator {
+public interface ISnippetCodeDAO extends IGenericDAO<SnippetCode, Long> {
 
     /**
      * Returns the list of snippet codes from the database
