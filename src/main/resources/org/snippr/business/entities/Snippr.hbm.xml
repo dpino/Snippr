@@ -42,6 +42,10 @@
 
         <property name="title" unique="true" />
         <property name="description" />
+        <set name="snippetCodes" inverse="true" cascade="all-delete-orphan">
+            <key column="snippet_id" />
+            <one-to-many class="org.snippr.business.entities.Snippet" />
+        </set>
     </class>
 
     <!-- SnippetCode -->
