@@ -16,23 +16,34 @@
 	You should have received a copy of the GNU Affero General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/common/layout/template.zul"?>
 
-<div height="100%" width="100%" self="@{define(content)}">
-	<listbox>
-		<listitem>
-			<listcell>
-				<label multiline="true"><![CDATA[I have to say:
-it is an awesome snippet.]]>
-				</label>
-			</listcell>
-			<listcell label="jon.doe@example.com" />
-			<listcell label="http://example.com" />
-			<listcell>
-				<button label="Delete" />
-			</listcell>
-		</listitem>
-	</listbox>
-	<button label="New" />
-	<button label="Save" />
-</div>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="list" inline="true" macroURI="_listComments.zul"?>
+<?component name="edit" inline="true" macroURI="_editComment.zul"?>
+
+<zk xmlns:w="http://www.zkoss.org/2005/zk/client">
+	<window self="@{define(content)}"
+		apply="org.snippr.web.controllers.CommentCRUDController">
+
+        <hbox pack="center" width="100%">
+            <label id="notificationMessage" class="notificationMessage"
+                visible="false">
+                <attribute w:name="setValue">
+                    function (value) {
+                       this.$setValue(value);
+                       jq(this).hide().fadeIn('fast');
+                    }
+                </attribute>
+            </label>
+        </hbox>
+
+        <separator />
+
+		 <list id="listWindow" />
+		 <edit id="editWindow" />
+
+	</window>
+</zk>

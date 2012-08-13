@@ -1,0 +1,48 @@
+<!--
+    This file is part of Snippr
+
+    Copyright (C) 2011 Igalia, S.L.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<window id="${arg.id}" title="Comments List" width="100%">
+    <grid id="comments" model="@{controller.comments}" mold="paging"
+        pageSize="10" fixedLayout="true" width="100%">
+        <columns>
+            <column label="Comment" sortDirection="ascending" />
+            <column label="Email" sortDirection="ascending" />
+            <column label="URL" sortDirection="ascending" />
+            <column label="Operations" width="20%"/>
+        </columns>
+        <rows>
+            <row self="@{each='comment'}" value="@{comment}"
+                    onClick="controller.openEditForm(self.value)">
+                <label value="@{comment.text}" />
+                <label value="@{comment.email}" />
+                <label value="@{comment.url}" />
+                <hbox>
+                    <button label="Edit" tooltiptext="Edit"
+                        onClick="controller.openEditForm(self.parent.parent.value)" />
+                    <button label="Delete" tooltiptext="Delete"
+                        onClick="controller.delete(self.parent.parent.value)" />
+                </hbox>
+            </row>
+        </rows>
+    </grid>
+
+    <separator />
+
+    <button label="Create" onClick="controller.openCreateForm()"/>
+</window>
