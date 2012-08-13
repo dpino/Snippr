@@ -58,4 +58,8 @@ public class Comment extends BaseEntity {
         this.url = url;
     }
 
+    public String toString(){
+				return this.email;
+    }
+
 }
