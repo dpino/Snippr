@@ -1,0 +1,48 @@
+<!--
+    This file is part of Garage
+
+    Copyright (C) 2011 Igalia, S.L.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<window id="${arg.id}" title="SnippetCodes List">
+    <grid id="snippetCodes" model="@{controller.snippetCodes}" mold="paging"
+        pageSize="10" fixedLayout="true" width="100%">
+        <columns>
+            <column label="Code" sortDirection="ascending" />
+            <column label="Snippet" sortDirection="ascending" />
+        </columns>
+        <rows>
+            <row self="@{each='snippetCode'}" value="@{snippetCode}"
+                    onClick="controller.openEditForm(self.value)">
+                <label value="@{snippetCode.code}" />
+                <label value="@{snippetCode.snippet}" />
+                <hbox>
+                    <button label="Edit" tooltiptext="Edit"
+                        onClick="controller.openEditForm(self.parent.parent.value)" />
+
+                    <button label="Delete" tooltiptext="Delete"
+                        onClick="controller.delete(self.parent.parent.value)" />
+                </hbox>
+            </row>
+        </rows>
+    </grid>
+
+    <separator />
+
+    <button label="Create" onClick="controller.openCreateForm()"/>
+</window>
