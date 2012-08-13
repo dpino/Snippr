@@ -64,4 +64,15 @@
         <property name="name" unique="false" />
     </class>
 
+   <!-- Comment -->
+    <class name="Comment" table="comment">
+        <id name="id" access="property">
+            <generator class="native" />
+        </id>
+
+        <property name="text" column="text"/>
+        <property name="email" column="email"/>
+        <property name="url" column="url"/>
+    </class>
+
 </hibernate-mapping>
