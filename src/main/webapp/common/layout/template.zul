@@ -32,7 +32,7 @@
                     <menubar>
                         <menu label="Entities">
                             <menupopup>
-                                <menuitem label="Snippets" href="/"/>
+                                <menuitem label="Snippets" href="/snippets/snippets.zul"/>
                                 <menuitem label="Comments" href="/comments/comments.zul"/>
                                 <menuitem label="Labels" href="/labels/labels.zul" />
                             </menupopup>

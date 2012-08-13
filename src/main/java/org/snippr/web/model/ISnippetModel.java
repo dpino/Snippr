@@ -16,24 +16,32 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.snippr.business.dao;
+package org.snippr.web.model;
+
+import java.util.List;
 
 import org.snippr.business.entities.Snippet;
+import org.snippr.business.exceptions.DuplicateName;
+import org.snippr.business.exceptions.InstanceNotFoundException;
 
 /**
- * Interface for the DAO class of Snippet
- *
- * @author José Manuel Ciges Regueiro
+ * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
  * @version 20120810
- *
  */
-public interface ISnippetDAO extends IGenericDAO<Snippet, Long> {
+public interface ISnippetModel {
 
-    /**
-     * Verifies that the snippet exists in the database
-     * @param snippet   Snippet instance
-     * @return
-     */
-    boolean exists(Snippet snippet);
+    List<Snippet> getAll();
+
+    Snippet getSnippet();
+
+    void prepareForCreate();
+
+    void prepareForEdit(Long id) throws InstanceNotFoundException;
+
+    void save() throws DuplicateName;
+
+    void setSnippet(Snippet snippet);
+
+    void delete(Snippet snippet) throws InstanceNotFoundException;
 
 }

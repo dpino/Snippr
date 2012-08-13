@@ -28,6 +28,7 @@ package org.snippr.business.entities;
 public class SnippetCode extends BaseEntity {
 
     private String code;
+
     private Snippet snippet;
 
     /**
@@ -69,6 +70,12 @@ public class SnippetCode extends BaseEntity {
     public SnippetCode(String code, Snippet snippet) {
         this.setCode(code);
         this.setSnippet(snippet);
+    }
+
+    /**
+     * Default snippet constructor with no arguments
+     */
+    public SnippetCode() {
     }
 
     @Override

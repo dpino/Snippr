@@ -18,17 +18,22 @@
  */
 package org.snippr.business.entities;
 
+import java.util.Set;
+
 /**
  * Class that represents a Snippet of code
  *
  * @author José Manuel Ciges Regueiro
- * @version 20120803
+ * @version 20120810
  *
  */
 public class Snippet extends BaseEntity {
 
     private String title;
+
     private String description;
+
+    private Set<SnippetCode> snippetCodes;
 
     /**
      * The string which identifies the snippet, what it does.
@@ -64,6 +69,42 @@ public class Snippet extends BaseEntity {
     public Snippet(String title, String description) {
         this.setTitle(title);
         this.setDescription(description);
+    }
+
+    /**
+     * Snippet constructor with no arguments
+     */
+    public Snippet() {
+    }
+
+    /**
+     * Set relation between the snippet and its code fragments
+     */
+    public void setSnippetCodes(Set<SnippetCode> snippetCodes)  {
+        this.snippetCodes = snippetCodes;
+    }
+
+    /**
+     * Gets the code fragments for this snippet
+     */
+    public Set<SnippetCode> getSnippetCodes()   {
+        return this.snippetCodes;
+    }
+
+    /**
+     * Add a code fragment to this snippet
+     */
+    public void addSnippetCode(SnippetCode snippetCode) {
+        snippetCode.setSnippet(this);
+        snippetCodes.add(snippetCode);
+    }
+
+    /**
+     * Remove a code fragment from this snippet
+     */
+    public void removeSnippetCode(SnippetCode snippetCode)  {
+        snippetCode.setSnippet(null);
+        snippetCodes.remove(snippetCode);
     }
 
     @Override

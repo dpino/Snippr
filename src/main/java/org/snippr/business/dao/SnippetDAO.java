@@ -18,12 +18,11 @@
  */
 package org.snippr.business.dao;
 
-import java.io.Serializable;
+import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.engine.SessionImplementor;
 import org.snippr.business.entities.Snippet;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -34,13 +33,20 @@ import org.springframework.stereotype.Repository;
  * Database DAO class for Snippet
  *
  * @author José Manuel Ciges Regueiro
- * @version 20120803
+ * @version 20120810
  *
  */
 @Repository
 @Scope(BeanDefinition.SCOPE_SINGLETON)
 public class SnippetDAO extends GenericDAOHibernate<Snippet, Long> implements
         ISnippetDAO {
+
+    @Override
+    public List<Snippet> getAll() {
+        Criteria criteria = getSession().createCriteria(Snippet.class);
+        criteria.addOrder(Order.asc("id"));
+        return criteria.list();
+    }
 
     /* (non-Javadoc)
      * @see org.snippr.business.dao.ISnippetDAO#exists(org.snippr.business.entities.Snippet)
@@ -50,13 +56,6 @@ public class SnippetDAO extends GenericDAOHibernate<Snippet, Long> implements
         Criteria criteria = getSession().createCriteria(Snippet.class);
         criteria.add(Restrictions.eq("title", snippet.getTitle()));
         return !criteria.list().isEmpty();
-    }
-
-    @Override
-    public Serializable generate(SessionImplementor session, Object object)
-            throws HibernateException {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }
