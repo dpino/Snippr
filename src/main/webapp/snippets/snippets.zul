@@ -16,12 +16,16 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/common/layout/template.zul"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
 <?component name="list" inline="true" macroURI="_listSnippets.zul"?>
+<?component name="rename" inline="true" macroURI="_renameSnippet.zul"?>
 <?component name="edit" inline="true" macroURI="_editSnippet.zul"?>
+
 <zk xmlns:w="http://www.zkoss.org/2005/zk/client">
+
     <window self="@{define(content)}" apply="org.snippr.web.controllers.SnippetCRUDController">
 
         <hbox pack="center" width="100%">
@@ -39,6 +43,7 @@
         <separator />
 
         <list id="listWindow" />
+        <rename id="renameWindow" />
         <edit id="editWindow" />
 
     </window>

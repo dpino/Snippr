@@ -37,7 +37,7 @@ import org.zkoss.zul.api.Window;
 
 /**
  * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
- * @version 20120810
+ * @version 20120813
  */
 public class SnippetCRUDController extends GenericForwardComposer {
 
@@ -48,6 +48,8 @@ public class SnippetCRUDController extends GenericForwardComposer {
     private ISnippetModel snippetModel;
 
     private Window listWindow;
+
+    private Window renameWindow;
 
     private Window editWindow;
 
@@ -100,33 +102,33 @@ public class SnippetCRUDController extends GenericForwardComposer {
      */
     private OnlyOneVisible getVisibility() {
         if (visibility == null) {
-            visibility = new OnlyOneVisible(listWindow, editWindow);
+            visibility = new OnlyOneVisible(listWindow, renameWindow, editWindow);
         }
         return visibility;
     }
 
     /**
-     * Helper function to replace list window by edit window
+     * Helper function to replace list window by rename window
      * @param String title
      */
-    private void showEditWindow(String title) {
+    private void showRenameWindow(String title) {
         setTitle(title);
-        Util.reloadBindings(editWindow);
-        getVisibility().showOnly(editWindow);
+        Util.reloadBindings(renameWindow);
+        getVisibility().showOnly(renameWindow);
     }
 
     /**
-     * Opens the form to edit the Snippet selected
+     * Opens the form to edit the Snippet title selected
      * @param Snippet snippet
      */
-    public void openEditForm(Snippet snippet) {
+    public void openRenameForm(Snippet snippet) {
         try {
             snippetModel.prepareForEdit(snippet.getId());
-            showEditWindow(String.format("Edit Snippet: %s", snippet.getTitle()));
+            showRenameWindow(String.format("Edit snippet title: %s", snippet.getTitle()));
         } catch (InstanceNotFoundException e) {
             e.printStackTrace();
         }
-        showEditWindow(String.format("Edit Snippet: %s", snippet.getTitle()));
+        showRenameWindow(String.format("Edit snippet title: %s", snippet.getTitle()));
     }
 
     /**
@@ -140,11 +142,26 @@ public class SnippetCRUDController extends GenericForwardComposer {
     }
 
     /**
-     * Opens the form to create a new snippet
+     * Helper function to show edit window
+     * @param String title
+     */
+    private void showEditWindow(String title) {
+        setTitle(title);
+        Util.reloadBindings(editWindow);
+        getVisibility().showOnly(editWindow);
+    }
+
+    /**
+     * Opens the form to edit a snippet with its snippet codes
      * @param Snippet snippet
      */
-    public void openCreateForm() {
-        snippetModel.prepareForCreate();
+    public void openEditForm(Snippet snippet) {
+        try {
+            snippetModel.prepareForEdit(snippet.getId());
+            showEditWindow("Edit snippet");
+        } catch (InstanceNotFoundException e)   {
+            e.printStackTrace();
+        }
         showEditWindow("New Snippet");
     }
 
@@ -175,9 +192,8 @@ public class SnippetCRUDController extends GenericForwardComposer {
     public void saveAndContinue() {
         try {
             snippetModel.save();
-            snippetModel.prepareForCreate();
-            Util.reloadBindings(editWindow);
-            notificator.info("Snippet added");
+            Util.reloadBindings(renameWindow);
+            notificator.info("Snippet saved");
         } catch (DuplicateName e) {
             notificator.error("Duplicated Snippet");
         }

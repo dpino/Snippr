@@ -29,8 +29,10 @@
                 onClick="controller.openEditForm(self.value)">
                 <label value="@{snippet.title}" />
                 <hbox>
-                    <button label="Edit" tooltiptext="Edit"
+                    <button label="Edit" tooltiptext="Edit snippet properties"
                         onClick="controller.openEditForm(self.parent.parent.value)" />
+                    <button label="Rename" tooltiptext="Change snippet title"
+                        onClick="controller.openRenameForm(self.parent.parent.value)" />
                     <button label="Delete" tooltiptext="Delete"
                         onClick="controller.delete(self.parent.parent.value)" />
                 </hbox>

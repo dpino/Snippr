@@ -16,42 +16,31 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 
 <zk>
-    <window id="${arg.id}" visible="false">
-        <tabbox>
-            <tabs>
-                <tab id="tab"></tab>
-            </tabs>
-            <tabpanels>
-                <tabpanel>
-                    <grid fixedLayout="true">
-                        <columns>
-                            <column width="200px" />
-                            <column />
-                        </columns>
-                        <rows>
-                            <row>
-                                <label value="Title" />
-                                <textbox width="500px" value="@{controller.snippet.title}" />
-                            </row>
-                        </rows>
-                    </grid>
+    <window id="${arg.id}" visible="false" style="padding-left: 1em; padding-top: 1em;">
+        <vbox>
+            <label value="Creation of a new snippet:" style="font-weight: bold;"/>
+            <hbox style="margin-top: 1em;">
+                    <label value="Enter title:  "/><textbox cols="100" rows="1" value="@{controller.snippet.title}" constraint="no empty" tooltiptext="Name which identifies the snippet, what it does"/>
+            </hbox>
+            <label value="Enter descrition:"/>
+            <textbox width="100%" rows="10" value="@{controller.snippet.description}" constraint="no empty" tooltiptext="Description of what the snippet does and other information the user regards interesting"/>
+            <separator />
 
-                    <separator />
+            <!--
+            TODO:  Show list of Snippet codes for the snippet
+            -->
 
-                    <hbox>
-                        <button label="Save"
-                            onClick="controller.saveAndExit()" />
-                        <button label="Save and Continue"
-                            onClick="controller.saveAndContinue()" />
-                        <button label="Cancel"
-                            onClick="controller.cancel()" />
-                    </hbox>
-                </tabpanel>
-            </tabpanels>
-        </tabbox>
+            <hbox>
+                <button label="Save"
+                    onClick="controller.saveAndExit()" />
+                <button label="Save and Continue"
+                    onClick="controller.saveAndContinue()" />
+                <button label="Cancel"
+                    onClick="controller.cancel()" />
+            </hbox>
+        </vbox>
     </window>
 </zk>
