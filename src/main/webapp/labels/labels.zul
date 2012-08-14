@@ -21,7 +21,7 @@
 
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 
-<?link rel="stylesheet" type="text/css" href="/common/css/garage.css"?>
+<?link rel="stylesheet" type="text/css" href="/common/css/snippr.css"?>
 
 <?component name="list" inline="true" macroURI="_listLabels.zul"?>
 <?component name="edit" inline="true" macroURI="_editLabel.zul"?>
