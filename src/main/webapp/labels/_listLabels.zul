@@ -19,7 +19,7 @@
 
 <window id="${arg.id}" title="Label List">
     <grid id="labelGrid" model="@{controller.labels}" mold="paging"
-        pageSize="10" fixedLayout="true" width="100%">
+        pageSize="10" fixedLayout="true" width="100%" >
         <columns>
             <column label="Name" sortDirection="ascending" />
             <column label="Operations" width="20%" />
@@ -41,4 +41,5 @@
     <separator />
 
     <button label="Add" onClick="controller.openCreateForm()" />
+
 </window>

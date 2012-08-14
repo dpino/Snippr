@@ -1,7 +1,7 @@
 <!--
     This file is part of Snippr
 
-    Copyright (C) 2011 Igalia, S.L.
+    Copyright (C) 2012 Igalia, S.L.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -17,10 +17,56 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/common/layout/template.zul"?>
 
-<?link rel="stylesheet" type="text/css" href="/common/css/snippr.css"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 
-<div height="100%" width="100%" self="@{define(content)}">
+<window apply="org.snippr.web.controllers.SnippetCRUDController"
+        self="@{define(content)}">
+    <borderlayout height="600px">
+        <west title="Labels" size="15%" flex="true" maxsize="250" splittable="true"
+                collapsible="true" context="contextMenuLabels" >
+            <!-- Labels -->
+        </west>
 
-</div>
+        <center border="none">
+            <borderlayout>
+                <north height="15%" flex="true" context="contextMenuSnippets">
+
+                    <!-- List snippets -->
+                    <listbox id="listSnippets"
+                            model="@{controller.snippets}">
+                        <listhead>
+                            <listheader label="Snippet" />
+                        </listhead>
+                        <listitem self="@{each='snippet'}" value="@{snippet}">
+                            <listcell label="@{snippet.title}" />
+                        </listitem>
+                    </listbox>
+
+            </north>
+                <south height="85%" flex="true">
+                    <vbox>
+                        <hbox>
+                            <button id="btnAddCode" label="add code" />
+                            <button id="btnAddComment" label="add comment" />
+                        </hbox>
+
+                        <!-- List code and comments -->
+                    </vbox>
+                </south>
+            </borderlayout>
+        </center>
+    </borderlayout>
+
+    <menupopup id="contextMenuSnippets">
+        <menuitem label="Add Snippet" onClick="controller.addSnippet()" />
+    </menupopup>
+
+    <menupopup id="contextMenuLabels">
+        <menuitem label="Add Label" onClick="controller.addLabel()" />
+    </menupopup>
+
+
+</window>

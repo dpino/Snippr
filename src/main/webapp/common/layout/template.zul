@@ -1,7 +1,7 @@
 <!--
-    This file is part of Snipper
+    This file is part of Snippit
 
-    Copyright (C) 2011 Igalia, S.L.
+    Copyright (C) 2012 Igalia, S.L.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -17,37 +17,39 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<?link rel="stylesheet" type="text/css" href="/common/css/snippr.css"?>
-
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 
-<zk>
+<zk xmlns:n="http://www.zkoss.org/2005/zk/native">
+    <borderlayout>
+        <north>
+            <div>
+                <n:span style="font-size: 32px; font-family: Arial; font-weight: bold; ">Snippr</n:span>
 
-    <div xmlns:n="http://www.zkoss.org/2005/zk/native" height="100%">
-        <borderlayout height="100%" width="100%">
-            <north border="none">
-                <div>
-                    <n:h2>Snippr</n:h2>
+                <!-- Menu -->
+                <hbox style="margin-top: 10px; margin-bottom: 8px;">
+                    <hbox>
+                        <a href="/pages/search.zul">Search</a> |
+                        <a href="/pages/labels.zul">Labels</a> |
+                        <a href="/pages/snippets.zul">Snippets</a>
+                    </hbox>
 
-                    <menubar>
-                        <menu label="Entities">
-                            <menupopup>
-                                <menuitem label="Snippets" href="/snippets/snippets.zul"/>
-                                <menuitem label="SnippetCodes" href="/snippetcodes/snippetcodes.zul"/>
-                                <menuitem label="Comments" href="/comments/comments.zul"/>
-                                <menuitem label="Labels" href="/labels/labels.zul" />
-                            </menupopup>
-                        </menu>
-                    </menubar>
-                </div>
-            </north>
+                    <hbox pack="end">
+                        <a href="/pages/sign-in.zul" >Sign-in</a>
+                    </hbox>
+                </hbox>
+            </div>
 
-            <center self="@{insert(content)}" />
-
-            <south border="none">
-                <n:p>Igalia @ Some rights reserved</n:p>
-            </south>
-        </borderlayout>
-    </div>
-
+            <!--
+            <div>
+                <n:ul>
+                    <n:li><n:a href="" onClick="/">XXX</n:a></n:li>
+                </n:ul>
+            </div>
+            -->
+        </north>
+        <center self="@{insert(content)}" />
+        <south>
+            <n:p>Igalia @ Some Rights Reserved</n:p>
+        </south>
+    </borderlayout>
 </zk>
