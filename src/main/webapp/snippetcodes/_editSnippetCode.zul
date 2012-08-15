@@ -35,7 +35,7 @@
                         <rows>
                             <row>
                                 <label value="Code" />
-                                <textbox width="500px" value="@{controller.snippetCode.code}" />
+                                <textbox rows="10" width="500px" value="@{controller.snippetCode.code}" />
                             </row>
                             <row>
                                 <label value="Snippet" />
