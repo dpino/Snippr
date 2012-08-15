@@ -24,6 +24,10 @@
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 
 <?link rel="stylesheet" type="text/css" href="/common/css/snippr.css"?>
+<?link rel="stylesheet" type="text/css" href="http://www.steamdev.com/snippet/css/jquery.snippet.css"?>
+<?script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"?>
+<?script type="text/javascript" src="http://www.steamdev.com/snippet/js/jquery.snippet.js"?>
+<?script type="text/javascript" src="/common/js/syntaxHighlighting.js"?>
 
 <?component name="list" inline="true" macroURI="_listSnippetCodes.zul"?>
 <?component name="edit" inline="true" macroURI="_editSnippetCode.zul"?>
