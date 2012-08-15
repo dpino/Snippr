@@ -27,10 +27,12 @@
             <column label="Snippet" sortDirection="ascending" />
         </columns>
         <rows>
-            <row self="@{each='snippetCode'}" value="@{snippetCode}"
-                    onClick="controller.openEditForm(self.value)">
+            <row self="@{each='snippetCode'}" value="@{snippetCode}">
+                <n:pre class="c" xmlns:n="native">
                 <label value="@{snippetCode.code}" />
-                <label value="@{snippetCode.snippet}" />
+                </n:pre>
+                <label value="@{snippetCode.snippet}"
+                    onClick="controller.openEditForm(self.parent.value)"/>
                 <hbox>
                     <button label="Edit" tooltiptext="Edit"
                         onClick="controller.openEditForm(self.parent.parent.value)" />
