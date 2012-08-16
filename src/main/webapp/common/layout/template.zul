@@ -35,7 +35,9 @@
                     </hbox>
 
                     <hbox pack="end">
-                        <a href="/pages/sign-in.zul" >Sign-in</a>
+                       <label if="${sec:isAllGranted('ROLE_USER')}">${authentication.principal.username}</label>
+                        <a  href="/j_spring_security_logout" if="${sec:isAllGranted('ROLE_USER')}">Logout</a>
+                        <a  if="!${sec:isAllGranted('ROLE_USER')}" href="/pages/sign-in.zul" >Sign-in</a>
                     </hbox>
                 </hbox>
             </div>
