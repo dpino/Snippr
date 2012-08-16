@@ -18,6 +18,7 @@
 -->
 
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
 
 <zk xmlns:n="http://www.zkoss.org/2005/zk/native">
     <borderlayout>
