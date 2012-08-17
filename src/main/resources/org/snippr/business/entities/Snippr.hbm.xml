@@ -56,7 +56,7 @@
         <property name="description" />
         <set name="snippetCodes" inverse="true" cascade="all-delete-orphan">
             <key column="snippet_id" />
-            <one-to-many class="org.snippr.business.entities.Snippet" />
+            <one-to-many class="org.snippr.business.entities.SnippetCode" />
         </set>
     </class>
 
