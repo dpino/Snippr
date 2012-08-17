@@ -21,12 +21,13 @@ package org.snippr.web.model;
 import java.util.List;
 
 import org.snippr.business.entities.Snippet;
+import org.snippr.business.entities.SnippetCode;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 
 /**
  * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
- * @version 20120810
+ * @version 20120817
  */
 public interface ISnippetModel {
 
@@ -44,4 +45,9 @@ public interface ISnippetModel {
 
     void delete(Snippet snippet) throws InstanceNotFoundException;
 
+    List<SnippetCode> getSnippetCodes();
+
+    void addNewSnippetCode();
+
+    void deleteSnippetCode(SnippetCode snippetCode) throws InstanceNotFoundException;
 }

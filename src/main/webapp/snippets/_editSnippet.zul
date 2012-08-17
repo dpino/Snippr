@@ -21,17 +21,31 @@
 <zk>
     <window id="${arg.id}" visible="false" style="padding-left: 1em; padding-top: 1em;">
         <vbox>
-            <label value="Creation of a new snippet:" style="font-weight: bold;"/>
+            <label value="Snippet properties edition:" style="font-weight: bold;"/>
             <hbox style="margin-top: 1em;">
                     <label value="Enter title:  "/><textbox cols="100" rows="1" value="@{controller.snippet.title}" constraint="no empty" tooltiptext="Name which identifies the snippet, what it does"/>
             </hbox>
-            <label value="Enter descrition:"/>
+            <label value="Enter description:"/>
             <textbox width="100%" rows="10" value="@{controller.snippet.description}" constraint="no empty" tooltiptext="Description of what the snippet does and other information the user regards interesting"/>
-            <separator />
 
-            <!--
-            TODO:  Show list of Snippet codes for the snippet
-            -->
+            <separator />
+            <button label="Add code" onClick="controller.addSnippetCode()" />
+
+            <grid id="snippetCodeGrid" model="@{controller.snippet.SnippetCodes}" mold="paging"
+                pageSize="10" fixedLayout="true" width="100%">
+                <columns>
+                    <column label="Code fragment" />
+                    <column label="Operations" width="10%" />
+                </columns>
+                <rows>
+                    <row self="@{each='snippetCode'}" value="@{snippetCode}">
+                        <textbox width="99%" value="@{snippetCode.Code}" rows="10"/>
+                        <div align="center">
+                            <button label="Delete" tooltiptext="Delete" onClick="controller.delSnippetCode(self.parent.parent.value)" />
+                        </div>
+                    </row>
+                </rows>
+            </grid>
 
             <hbox>
                 <button label="Save"

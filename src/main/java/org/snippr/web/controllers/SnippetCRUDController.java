@@ -21,7 +21,9 @@ package org.snippr.web.controllers;
 import java.io.IOException;
 import java.util.List;
 
+import org.snippr.business.dao.SnippetCodeDAO;
 import org.snippr.business.entities.Snippet;
+import org.snippr.business.entities.SnippetCode;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.snippr.web.common.Notificator;
@@ -37,7 +39,7 @@ import org.zkoss.zul.api.Window;
 
 /**
  * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
- * @version 20120813
+ * @version 20120817
  */
 public class SnippetCRUDController extends GenericForwardComposer {
 
@@ -162,7 +164,16 @@ public class SnippetCRUDController extends GenericForwardComposer {
         } catch (InstanceNotFoundException e)   {
             e.printStackTrace();
         }
-        showEditWindow("New Snippet");
+        //showEditWindow("New Snippet");
+    }
+
+    /**
+     * Opens the form to create a snippet with its snippet codes
+     * @param Snippet snippet
+     */
+    public void openCreateForm() {
+            snippetModel.prepareForCreate();
+            showEditWindow("Create a new  snippet");
     }
 
     /**
@@ -192,11 +203,41 @@ public class SnippetCRUDController extends GenericForwardComposer {
     public void saveAndContinue() {
         try {
             snippetModel.save();
-            Util.reloadBindings(renameWindow);
+            Util.reloadBindings(editWindow);
             notificator.info("Snippet saved");
         } catch (DuplicateName e) {
             notificator.error("Duplicated Snippet");
         }
     }
 
+    /**
+     * Add a blank SnippetCode to the snippet
+     */
+    public void addSnippetCode() {
+        snippetModel.addNewSnippetCode();
+        try {
+            snippetModel.save();
+            Util.reloadBindings(editWindow);
+            notificator.info("Snippet Code created");
+        } catch (DuplicateName e) {
+            notificator.error("Duplicated Snippet");
+        }
+    }
+
+    /**
+     * Delete the snippetCode passed as argument
+     * @param SnippetCode snippetCode
+     */
+
+    public void delSnippetCode(SnippetCode snippetCode) {
+        try {
+            snippetModel.deleteSnippetCode(snippetCode);
+            // Reload data after deleting the snippet code
+            snippetModel.prepareForEdit(snippetModel.getSnippet().getId());
+            Util.reloadBindings(editWindow);
+            notificator.info("Snippet Code deleted");
+        } catch (InstanceNotFoundException e)   {
+            e.printStackTrace();
+        }
+    }
 }

@@ -20,8 +20,11 @@ package org.snippr.web.model;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
+import org.snippr.business.dao.ISnippetCodeDAO;
 import org.snippr.business.dao.ISnippetDAO;
 import org.snippr.business.entities.Snippet;
+import org.snippr.business.entities.SnippetCode;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
- * @version 20120810
+ * @version 20120817
  */
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
@@ -41,12 +44,19 @@ public class SnippetModel implements ISnippetModel {
     @Autowired
     private ISnippetDAO snippetDAO;
 
+    @Autowired
+    private ISnippetCodeDAO snippetCodeDAO;
+
     private Snippet snippet;
 
     @Override
     @Transactional(readOnly = true)
     public List<Snippet> getAll() {
-        return (List<Snippet>) snippetDAO.getAll();
+        List<Snippet> snippets = snippetDAO.getAll();
+        for (Snippet each:snippets) {
+            initializeSnippet(each);
+        }
+        return snippets;
     }
 
     @Override
@@ -81,13 +91,54 @@ public class SnippetModel implements ISnippetModel {
     @Transactional(readOnly = true)
     public void prepareForEdit(Long id) throws InstanceNotFoundException {
         snippet = snippetDAO.find(id);
-
+        initializeSnippet(snippet);
     }
 
     @Override
     @Transactional
     public void delete(Snippet snippet) throws InstanceNotFoundException {
         snippetDAO.remove(snippet.getId());
+    }
+
+    /**
+     * Part N of 1-N relationship between Snippet and SnippetCode is loaded "lazely"
+     * In this helper function we use a proxy in Hibernate to force load
+     *
+     * @param snippet
+     */
+    private void initializeSnippet(Snippet snippet) {
+        Hibernate.initialize(snippet.getSnippetCodes());
+        for (SnippetCode each:snippet.getSnippetCodes())    {
+            Hibernate.initialize(each);
+        }
+    }
+
+    /**
+     * Get the codes for a snippet?
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<SnippetCode> getSnippetCodes()  {
+        return snippetCodeDAO.getAll();
+    }
+
+    /**
+     * Create a new SnippetCode for this snippet
+     */
+    @Transactional
+    public void addNewSnippetCode()  {
+        SnippetCode snippetCode = new SnippetCode();
+        snippetCode.setCode("Introduce your code here ...");
+        snippet.addSnippetCode(snippetCode);
+    }
+
+    /**
+     * Delete a SnippetCode for this snippet
+     */
+    @Transactional
+    public void deleteSnippetCode(SnippetCode snippetCode) throws InstanceNotFoundException {
+        snippet.removeSnippetCode(snippetCode);
+        snippetCodeDAO.remove(snippetCode.getId());
     }
 
 }
