@@ -29,9 +29,10 @@
                 <!-- Menu -->
                 <hbox style="margin-top: 10px; margin-bottom: 8px;">
                     <hbox>
+                        <a href="/">Home</a> |
                         <a href="/pages/search.zul">Search</a> |
                         <a href="/pages/labels.zul">Labels</a> |
-                        <a href="/pages/snippets.zul">Snippets</a>
+                        <a href="/snippets/snippets.zul">Snippets</a>
                     </hbox>
 
                     <hbox pack="end">

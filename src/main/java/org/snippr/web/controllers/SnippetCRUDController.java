@@ -240,4 +240,12 @@ public class SnippetCRUDController extends GenericForwardComposer {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Redirects to home window
+     * @throws IOException
+     */
+    public void goHome() throws IOException {
+        Executions.sendRedirect("/");
+    }
 }

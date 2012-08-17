@@ -43,4 +43,5 @@
     <separator />
 
     <button label="Add" onClick="controller.openCreateForm()" />
+    <button label="Cancel" onClick="controller.goHome()" />
 </window>
