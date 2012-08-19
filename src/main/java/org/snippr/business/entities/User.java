@@ -44,8 +44,11 @@ public class User extends BaseEntity implements UserDetails {
     private boolean accountNonExpired;
     private boolean credentialsNonExpired;
     private boolean accountNonLocked;
-    private Set<Role> roles = new HashSet<Role>(0);
+    private final Set<Role> roles = new HashSet<Role>(0);
     private Collection<GrantedAuthority> authorities;
+    private Collection <Snippet> snippets ;
+    private Collection <Label> labels ;
+    private Collection <Comment> comments ;
 
     public User invalidate() {
         enabled = true;

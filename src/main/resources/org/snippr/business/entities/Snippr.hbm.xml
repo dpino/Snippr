@@ -23,6 +23,18 @@
             <key column="user_id" />
             <many-to-many column="role_id" entity-name="org.snippr.business.entities.Role" />
         </set>
+        <set name="snippets" table="users_snippets" cascade="all-delete-orphan" >
+            <key column="user_id" />
+            <one-to-many class="org.snippr.business.entities.Snippet" />
+        </set>
+        <set name="labels" table="users_labels" cascade="all-delete-orphan" >
+            <key column="user_id" />
+            <one-to-many class="org.snippr.business.entities.Label" />
+        </set>
+        <set name="comments" table="users_comments"  cascade="all-delete-orphan" >
+            <key column="user_id" />
+            <one-to-many class="org.snippr.business.entities.Comment" />
+        </set>
     </class>
 
     <!-- Role -->
