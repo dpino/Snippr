@@ -21,7 +21,6 @@ package org.snippr.web.controllers;
 import java.io.IOException;
 import java.util.List;
 
-import org.snippr.business.dao.SnippetCodeDAO;
 import org.snippr.business.entities.Snippet;
 import org.snippr.business.entities.SnippetCode;
 import org.snippr.business.exceptions.DuplicateName;
@@ -34,11 +33,14 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
+import org.zkoss.zul.api.Listbox;
 import org.zkoss.zul.api.Window;
 
 /**
  * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
+ * @author Jorge Muñoz Castañer <punkto@gmail.com>
  * @version 20120817
  */
 public class SnippetCRUDController extends GenericForwardComposer {
@@ -54,6 +56,8 @@ public class SnippetCRUDController extends GenericForwardComposer {
     private Window renameWindow;
 
     private Window editWindow;
+
+    private Listbox listSnippets;
 
     private OnlyOneVisible visibility;
 
@@ -247,5 +251,24 @@ public class SnippetCRUDController extends GenericForwardComposer {
      */
     public void goHome() throws IOException {
         Executions.sendRedirect("/");
+    }
+
+    /**
+     * Creates a new Snippet with default data
+     */
+    public void addSnippet() {
+        try {
+            snippetModel.addNewSnippet();
+        } catch (DuplicateName e) {
+            // alert();
+            try {
+                Messagebox
+                        .show("Duplicated Snippet. Please fill the previous default snippet before creating a new one.",
+                                "Error", 0,
+                        Messagebox.ERROR);
+            } catch (InterruptedException e1) {
+            }
+        }
+        Util.reloadBindings(listSnippets);
     }
 }
