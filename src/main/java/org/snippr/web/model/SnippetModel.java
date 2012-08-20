@@ -35,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
+ * @author Jorge Muñoz Castañer <punkto@gmail.com>
  * @version 20120817
  */
 @Service
@@ -139,6 +140,23 @@ public class SnippetModel implements ISnippetModel {
     public void deleteSnippetCode(SnippetCode snippetCode) throws InstanceNotFoundException {
         snippet.removeSnippetCode(snippetCode);
         snippetCodeDAO.remove(snippetCode.getId());
+    }
+
+    /**
+     * Create a new Snippet with default data.
+     *
+     * @throws DuplicateName
+     */
+    @Override
+    @Transactional
+    public void addNewSnippet() throws DuplicateName {
+        snippet = new Snippet();
+        snippet.setTitle("New Snippet, please fill it.");
+        snippet.setDescription("Add a description here.");
+        if (snippetDAO.exists(snippet)) {
+            throw new DuplicateName();
+        }
+        snippetDAO.save(snippet);
     }
 
 }

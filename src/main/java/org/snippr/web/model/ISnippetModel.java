@@ -27,6 +27,7 @@ import org.snippr.business.exceptions.InstanceNotFoundException;
 
 /**
  * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
+ * @author Jorge Muñoz Castañer <punkto@gmail.com>
  * @version 20120817
  */
 public interface ISnippetModel {
@@ -50,4 +51,6 @@ public interface ISnippetModel {
     void addNewSnippetCode();
 
     void deleteSnippetCode(SnippetCode snippetCode) throws InstanceNotFoundException;
+
+    void addNewSnippet() throws DuplicateName;
 }
