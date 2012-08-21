@@ -89,6 +89,9 @@
         <property name="text" column="text"/>
         <property name="email" column="email"/>
         <property name="url" column="url"/>
+
+         <many-to-one name="user" class="org.snippr.business.entities.User"
+            column="user_id"  />
     </class>
 
 </hibernate-mapping>
