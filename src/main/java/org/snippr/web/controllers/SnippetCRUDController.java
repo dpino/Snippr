@@ -35,13 +35,17 @@ import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
+import org.zkoss.zul.api.Button;
+import org.zkoss.zul.api.Grid;
 import org.zkoss.zul.api.Listbox;
+import org.zkoss.zul.api.Textbox;
 import org.zkoss.zul.api.Window;
+
 
 /**
  * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
  * @author Jorge Muñoz Castañer <punkto@gmail.com>
- * @version 20120817
+ * @version 20120825
  */
 public class SnippetCRUDController extends GenericForwardComposer {
 
@@ -60,6 +64,8 @@ public class SnippetCRUDController extends GenericForwardComposer {
     private Listbox listSnippets;
 
     private OnlyOneVisible visibility;
+
+    private boolean isnewSnippet;
 
     /*
      * (non-Javadoc)
@@ -168,7 +174,7 @@ public class SnippetCRUDController extends GenericForwardComposer {
         } catch (InstanceNotFoundException e)   {
             e.printStackTrace();
         }
-        //showEditWindow("New Snippet");
+        isnewSnippet = false;
     }
 
     /**
@@ -177,7 +183,18 @@ public class SnippetCRUDController extends GenericForwardComposer {
      */
     public void openCreateForm() {
             snippetModel.prepareForCreate();
+            // Disable some buttons and grid while the new snippet is not save
+            Button addcodeButton = (Button) editWindow.getFellow("addcodeButton");
+            Button saveButton = (Button) editWindow.getFellow("saveButton");
+            Button saveandcontinueButton = (Button) editWindow.getFellow("saveandcontinueButton");
+            Grid snippetCodeGrid = (Grid) editWindow.getFellow("snippetCodeGrid");
+            addcodeButton.setDisabled(true);
+            saveButton.setDisabled(true);
+            saveandcontinueButton.setDisabled(true);
+            snippetCodeGrid.setVisible(false);
+            
             showEditWindow("Create a new  snippet");
+            isnewSnippet = true;
     }
 
     /**
@@ -209,6 +226,14 @@ public class SnippetCRUDController extends GenericForwardComposer {
             snippetModel.save();
             Util.reloadBindings(editWindow);
             notificator.info("Snippet saved");
+            if (isnewSnippet)   {
+                Button addcodeButton = (Button) editWindow.getFellow("addcodeButton");
+                Grid snippetCodeGrid = (Grid) editWindow.getFellow("snippetCodeGrid");
+                snippetCodeGrid.setVisible(true);
+                addcodeButton.setDisabled(false);
+                // Now we go to "edit mode"
+                openEditForm(snippetModel.getSnippet());
+            }
         } catch (DuplicateName e) {
             notificator.error("Duplicated Snippet");
         }
@@ -270,5 +295,25 @@ public class SnippetCRUDController extends GenericForwardComposer {
             }
         }
         Util.reloadBindings(listSnippets);
+    }
+    
+    /**
+     * Verify if the user can save the new Snippet for enabling the save buttons
+     */
+    public void activateSaveButton()    {
+        if (isnewSnippet == true)   {
+            Textbox titleTextbox = (Textbox) editWindow.getFellow("titleTextbox");
+            Textbox descriptionTextbox = (Textbox) editWindow.getFellow("descriptionTextbox");
+            Button saveButton = (Button) editWindow.getFellow("saveButton");
+            Button saveandcontinueButton = (Button) editWindow.getFellow("saveandcontinueButton");
+            if (titleTextbox.getValue().trim().isEmpty() || descriptionTextbox.getValue().trim().isEmpty()) {
+                saveButton.setDisabled(true);
+                saveandcontinueButton.setDisabled(true);
+            }
+            else    {
+                saveButton.setDisabled(false);
+                saveandcontinueButton.setDisabled(false);
+            }
+        }
     }
 }

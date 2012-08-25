@@ -23,13 +23,16 @@
         <vbox>
             <label value="Snippet properties edition:" style="font-weight: bold;"/>
             <hbox style="margin-top: 1em;">
-                    <label value="Enter title:  "/><textbox cols="100" rows="1" value="@{controller.snippet.title}" constraint="no empty" tooltiptext="Name which identifies the snippet, what it does"/>
+                    <label value="Enter title:  "/>
+                    <textbox id="titleTextbox" cols="100" rows="1" value="@{controller.snippet.title}" tooltiptext="Name which identifies the snippet, what it does"
+                    onBlur="controller.activateSaveButton()" />
             </hbox>
             <label value="Enter description:"/>
-            <textbox width="100%" rows="10" value="@{controller.snippet.description}" constraint="no empty" tooltiptext="Description of what the snippet does and other information the user regards interesting"/>
+            <textbox id="descriptionTextbox" width="100%" rows="10" value="@{controller.snippet.description}" tooltiptext="Description of what the snippet does and other information the user regards interesting"
+            onBlur="controller.activateSaveButton()" />
 
             <separator />
-            <button label="Add code" onClick="controller.addSnippetCode()" />
+            <button id="addcodeButton" label="Add code" onClick="controller.addSnippetCode()" />
 
             <grid id="snippetCodeGrid" model="@{controller.snippet.SnippetCodes}" mold="paging"
                 pageSize="10" fixedLayout="true" width="100%">
@@ -48,9 +51,9 @@
             </grid>
 
             <hbox>
-                <button label="Save"
+                <button id="saveButton" label="Save"
                     onClick="controller.saveAndExit()" />
-                <button label="Save and Continue"
+                <button id="saveandcontinueButton" label="Save and Continue"
                     onClick="controller.saveAndContinue()" />
                 <button label="Cancel"
                     onClick="controller.cancel()" />
