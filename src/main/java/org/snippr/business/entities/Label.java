@@ -19,9 +19,13 @@
 
 package org.snippr.business.entities;
 
+import java.util.Set;
+
 public class Label extends BaseEntity {
 
     private String name;
+    private Set <User> users ;
+
 
     public Label() {
     }
@@ -37,5 +41,13 @@ public class Label extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+	public Set <User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set <User> users) {
+		this.users = users;
+	}
 
 }

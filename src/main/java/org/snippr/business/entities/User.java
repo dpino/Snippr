@@ -46,9 +46,9 @@ public class User extends BaseEntity implements UserDetails {
     private boolean accountNonLocked;
     private final Set<Role> roles = new HashSet<Role>(0);
     private Collection<GrantedAuthority> authorities;
-    private Collection <Snippet> snippets ;
-    private Collection <Label> labels ;
-    private Collection <Comment> comments ;
+    private Set <Snippet> snippets ;
+    private Set <Label> labels ;
+    private Set <Comment> comments ;
 
     public User invalidate() {
         enabled = true;
@@ -113,5 +113,29 @@ public class User extends BaseEntity implements UserDetails {
         }
         return authorities;
     }
+
+	public Set <Snippet> getSnippets() {
+		return snippets;
+	}
+
+	public void setSnippets(Set <Snippet> snippets) {
+		this.snippets = snippets;
+	}
+
+	public Set <Label> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(Set <Label> labels) {
+		this.labels = labels;
+	}
+
+	public Set <Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set <Comment> comments) {
+		this.comments = comments;
+	}
 
 }

@@ -19,6 +19,8 @@
 
 package org.snippr.business.entities;
 
+import java.util.Set;
+
 
 /**
  * @author Miguel Gonzalez <migonzalvar@gmail.com>
@@ -28,7 +30,7 @@ public class Comment extends BaseEntity {
     private String text;
     private String email;
     private String url;
-
+    private Set <User> users ;
 
     public Comment() {
         super();
@@ -58,8 +60,17 @@ public class Comment extends BaseEntity {
         this.url = url;
     }
 
-    public String toString(){
+    @Override
+	public String toString(){
 				return this.email;
     }
+
+	public Set <User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set <User> users) {
+		this.users = users;
+	}
 
 }

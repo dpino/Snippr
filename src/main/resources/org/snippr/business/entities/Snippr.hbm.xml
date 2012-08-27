@@ -23,18 +23,20 @@
             <key column="user_id" />
             <many-to-many column="role_id" entity-name="org.snippr.business.entities.Role" />
         </set>
-        <set name="snippets" table="users_snippets" cascade="all-delete-orphan" >
+        <set name="snippets" inverse="true" cascade="all-delete-orphan" >
             <key column="user_id" />
             <one-to-many class="org.snippr.business.entities.Snippet" />
         </set>
-        <set name="labels" table="users_labels" cascade="all-delete-orphan" >
+        <set name="labels" inverse="true" cascade="all-delete-orphan" >
             <key column="user_id" />
             <one-to-many class="org.snippr.business.entities.Label" />
         </set>
-        <set name="comments" table="users_comments"  cascade="all-delete-orphan" >
+        <set name="comments" inverse="true"  cascade="all-delete-orphan" >
             <key column="user_id" />
             <one-to-many class="org.snippr.business.entities.Comment" />
         </set>
+
+
     </class>
 
     <!-- Role -->
@@ -58,6 +60,12 @@
             <key column="snippet_id" />
             <one-to-many class="org.snippr.business.entities.SnippetCode" />
         </set>
+        <set name="users" inverse="true" cascade="save-update">
+            <key column="snippet_id" />
+            <one-to-many class="org.snippr.business.entities.User" />
+        </set>
+
+
     </class>
 
     <!-- SnippetCode -->
@@ -78,6 +86,13 @@
         </id>
 
         <property name="name" unique="false" />
+
+        <set name="users" inverse="true" cascade="save-update">
+            <key column="label_id" />
+            <one-to-many class="org.snippr.business.entities.User" />
+        </set>
+
+
     </class>
 
    <!-- Comment -->
@@ -90,8 +105,13 @@
         <property name="email" column="email"/>
         <property name="url" column="url"/>
 
-         <many-to-one name="user" class="org.snippr.business.entities.User"
-            column="user_id"  />
+        <set name="users" inverse="true" cascade="save-update">
+            <key column="comment_id" />
+            <one-to-many class="org.snippr.business.entities.User" />
+        </set>
+
+
+
     </class>
 
 </hibernate-mapping>

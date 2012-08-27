@@ -30,10 +30,9 @@ import java.util.Set;
 public class Snippet extends BaseEntity {
 
     private String title;
-
     private String description;
-
     private Set<SnippetCode> snippetCodes;
+    private Set <User> users ;
 
     /**
      * The string which identifies the snippet, what it does.
@@ -111,5 +110,11 @@ public class Snippet extends BaseEntity {
     public String toString() {
         return "Snippet [title=" + title + ", description=" + description + "]";
     }
+	public Set <User> getUsers() {
+		return users;
+	}
+	public void setUsers(Set <User> users) {
+		this.users = users;
+	}
 
 }
