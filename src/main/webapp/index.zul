@@ -25,9 +25,14 @@
 <window apply="org.snippr.web.controllers.SnippetCRUDController"
         self="@{define(content)}">
     <borderlayout height="600px">
-        <west title="Labels" size="15%" flex="true" maxsize="250" splittable="true"
+        <west title="Labels (${authentication.name})" size="15%" flex="true" maxsize="250" splittable="true"
                 collapsible="true" context="contextMenuLabels" >
             <!-- Labels -->
+            <listbox id="listLabels" model="@{controller.labels}">
+                <listitem self="@{each='label'}" value="@{label}">
+                    <listcell label="@{label.name}" />
+                </listitem>
+            </listbox>
         </west>
 
         <center border="none">

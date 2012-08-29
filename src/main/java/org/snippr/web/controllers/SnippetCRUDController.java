@@ -28,7 +28,10 @@ import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.snippr.web.common.Notificator;
 import org.snippr.web.common.OnlyOneVisible;
 import org.snippr.web.common.Util;
+import org.snippr.web.model.ILabelModel;
 import org.snippr.web.model.ISnippetModel;
+import org.springframework.security.core.Authentication;
+import org.zkoss.spring.security.SecurityUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
@@ -45,7 +48,7 @@ import org.zkoss.zul.api.Window;
 /**
  * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
  * @author Jorge Muñoz Castañer <punkto@gmail.com>
- * @version 20120825
+ * @version 20120829
  */
 public class SnippetCRUDController extends GenericForwardComposer {
 
@@ -66,6 +69,10 @@ public class SnippetCRUDController extends GenericForwardComposer {
     private OnlyOneVisible visibility;
 
     private boolean isnewSnippet;
+
+    private Listbox listLabels;
+
+    private ILabelModel labelModel;
 
     /*
      * (non-Javadoc)
@@ -316,4 +323,17 @@ public class SnippetCRUDController extends GenericForwardComposer {
             }
         }
     }
+
+    /**
+     * Returns the list of all  Labels from the database
+     * @return List<Snippet>
+     */
+    public List<org.snippr.business.entities.Label> getLabels() {
+        Authentication auth = SecurityUtil.getAuthentication();
+        String username = auth.getName();
+        // TODO:   The labels got should be only the labels for the authentified user
+        //          (With a code like return userModel.getLabels())
+        return labelModel.getAll();
+    }
+
 }
