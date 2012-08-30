@@ -19,12 +19,19 @@
 
 package org.snippr.business.entities;
 
+import java.util.Collections;
 import java.util.Set;
 
+/**
+ * @version 20120830
+ */
 public class Label extends BaseEntity {
 
     private String name;
+
     private Set <User> users ;
+
+    private Set<Snippet> snippets;
 
 
     public Label() {
@@ -49,5 +56,29 @@ public class Label extends BaseEntity {
 	public void setUsers(Set <User> users) {
 		this.users = users;
 	}
+
+
+    /**
+     * Gets the snippets with this label
+     */
+    public Set<Snippet> getSnippets()   {
+        return Collections.unmodifiableSet(this.snippets);
+    }
+
+    /**
+     * Add a snippet to the collections of snippets with this label
+     */
+    public void addSnippet(Snippet snippet) {
+        snippet.setLabel(this);
+        snippets.add(snippet);
+    }
+
+    /**
+     * Remove a snippet from the collection of snippets with this label
+     */
+    public void removeSnippet(Snippet snippet)  {
+        snippet.setLabel(null);
+        snippets.remove(snippet);
+    }
 
 }
