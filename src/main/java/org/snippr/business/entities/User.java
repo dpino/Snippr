@@ -21,6 +21,7 @@ package org.snippr.business.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +31,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  *
  * @author Antonio Arias <antonio.arias@gmail.com>
- *
+ * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
+ * @version 20120901
  */
 public class User extends BaseEntity implements UserDetails {
     private static final long serialVersionUID = -7594388337646930762L;
@@ -46,9 +48,9 @@ public class User extends BaseEntity implements UserDetails {
     private boolean accountNonLocked;
     private final Set<Role> roles = new HashSet<Role>(0);
     private Collection<GrantedAuthority> authorities;
-    private Set <Snippet> snippets ;
-    private Set <Label> labels ;
-    private Set <Comment> comments ;
+    private Set <Snippet> snippets;
+    private Set <Label> labels;
+    private Set <Comment> comments;
 
     public User invalidate() {
         enabled = true;
@@ -114,21 +116,51 @@ public class User extends BaseEntity implements UserDetails {
         return authorities;
     }
 
-	public Set <Snippet> getSnippets() {
-		return snippets;
+    /**
+     * Gets the snippets for this user
+     */
+	public Set<Snippet> getSnippets() {
+		return Collections.unmodifiableSet(this.snippets);
 	}
 
-	public void setSnippets(Set <Snippet> snippets) {
-		this.snippets = snippets;
-	}
+	/**
+     * Add a snippet to the collections of snippets for this user
+     */
+    public void addSnippet(Snippet snippet) {
+        snippet.setUser(this);
+        snippets.add(snippet);
+    }
 
-	public Set <Label> getLabels() {
-		return labels;
-	}
+    /**
+     * Remove a snippet from the collection of snippets for this user
+     */
+    public void removeSnippet(Snippet snippet)  {
+        snippet.setUser(null);
+        snippets.remove(snippet);
+    }
 
-	public void setLabels(Set <Label> labels) {
-		this.labels = labels;
-	}
+    /**
+     * Gets the labels for this user
+     */
+    public Set<Label> getLabels()   {
+        return Collections.unmodifiableSet(this.labels);
+    }
+
+    /**
+     * Add a label to the collections of labels for this user
+     */
+    public void addLabel(Label label) {
+        label.setUser(this);
+        labels.add(label);
+    }
+
+    /**
+     * Remove a label from the collection of labels for this user
+     */
+    public void removeLabel(Label label)  {
+        label.setUser(null);
+        labels.remove(label);
+    }
 
 	public Set <Comment> getComments() {
 		return comments;

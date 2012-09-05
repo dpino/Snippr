@@ -24,7 +24,7 @@ import java.util.Set;
  * Class that represents a Snippet of code
  *
  * @author José Manuel Ciges Regueiro
- * @version 20120830
+ * @version 20120831
  *
  */
 public class Snippet extends BaseEntity {
@@ -35,7 +35,7 @@ public class Snippet extends BaseEntity {
 
     private Set<SnippetCode> snippetCodes;
 
-    private Set <User> users ;
+    private User user ;
 
     private Label label;
 
@@ -115,12 +115,21 @@ public class Snippet extends BaseEntity {
     public String toString() {
         return "Snippet [title=" + title + ", description=" + description + "]";
     }
-	public Set <User> getUsers() {
-		return users;
-	}
-	public void setUsers(Set <User> users) {
-		this.users = users;
-	}
+
+    /**
+     * Gets the owner this snippet
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the owner of this snippet
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
     /**
      * Gets the label assigned to this snippet

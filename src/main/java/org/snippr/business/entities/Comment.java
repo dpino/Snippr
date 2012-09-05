@@ -21,16 +21,17 @@ package org.snippr.business.entities;
 
 import java.util.Set;
 
-
 /**
  * @author Miguel Gonzalez <migonzalvar@gmail.com>
+ * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
+ * @version 20120903
  */
 public class Comment extends BaseEntity {
 
     private String text;
     private String email;
     private String url;
-    private Set <User> users ;
+    private String user;
 
     public Comment() {
         super();
@@ -65,12 +66,12 @@ public class Comment extends BaseEntity {
 				return this.email;
     }
 
-	public Set <User> getUsers() {
-		return users;
+	public String getUser() {
+		return user;
 	}
 
-	public void setUsers(Set <User> users) {
-		this.users = users;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 }

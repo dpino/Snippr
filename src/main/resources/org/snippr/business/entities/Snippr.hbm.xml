@@ -35,8 +35,6 @@
             <key column="user_id" />
             <one-to-many class="org.snippr.business.entities.Comment" />
         </set>
-
-
     </class>
 
     <!-- Role -->
@@ -60,10 +58,8 @@
             <key column="snippet_id" />
             <one-to-many class="org.snippr.business.entities.SnippetCode" />
         </set>
-        <set name="users" inverse="true" cascade="save-update">
-            <key column="snippet_id" />
-            <one-to-many class="org.snippr.business.entities.User" />
-        </set>
+        <many-to-one name="user" class="org.snippr.business.entities.User"
+            column="user_id" not-null="true" />
         <many-to-one name="label" class="org.snippr.business.entities.Label"
             column="label_id" not-null="true" />
     </class>
@@ -87,11 +83,9 @@
 
         <property name="name" unique="false" />
 
-        <set name="users" inverse="true" cascade="save-update">
-            <key column="label_id" />
-            <one-to-many class="org.snippr.business.entities.User" />
-        </set>
-        <set name="snippets" inverse="true" cascade="save-update">
+        <many-to-one name="user" class="org.snippr.business.entities.User"
+            column="user_id" not-null="true" />
+        <set name="snippets" inverse="true" cascade="all-delete-orphan">
             <key column="label_id" />
             <one-to-many class="org.snippr.business.entities.Snippet" />
         </set>
@@ -107,13 +101,8 @@
         <property name="email" column="email"/>
         <property name="url" column="url"/>
 
-        <set name="users" inverse="true" cascade="save-update">
-            <key column="comment_id" />
-            <one-to-many class="org.snippr.business.entities.User" />
-        </set>
-
-
-
+        <many-to-one name="user" class="org.snippr.business.entities.User"
+            column="user_id" not-null="true" />
     </class>
 
 </hibernate-mapping>

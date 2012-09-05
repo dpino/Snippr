@@ -29,7 +29,7 @@ public class Label extends BaseEntity {
 
     private String name;
 
-    private Set <User> users ;
+    private User user;
 
     private Set<Snippet> snippets;
 
@@ -49,14 +49,19 @@ public class Label extends BaseEntity {
         this.name = name;
     }
 
-	public Set <User> getUsers() {
-		return users;
-	}
+    /**
+     * Gets the user which owns this label
+     */
+    public User getUser() {
+        return user;
+    }
 
-	public void setUsers(Set <User> users) {
-		this.users = users;
-	}
-
+    /**
+     * Sets the user which owns this label
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     /**
      * Gets the snippets with this label
