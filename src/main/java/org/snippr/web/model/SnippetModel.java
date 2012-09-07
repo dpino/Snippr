@@ -159,4 +159,17 @@ public class SnippetModel implements ISnippetModel {
         snippetDAO.save(snippet);
     }
 
+    /**
+     * Updates a Snippet with new data (equal id).
+     *
+     * @throws InstanceNotFoundException
+     *
+     * @throws DuplicateName
+     */
+    @Override
+    public void updateSnippet(Snippet snippet)
+            throws InstanceNotFoundException, DuplicateName {
+        snippetDAO.save(snippet);
+    }
+
 }
