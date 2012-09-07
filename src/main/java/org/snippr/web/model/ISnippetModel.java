@@ -53,4 +53,7 @@ public interface ISnippetModel {
     void deleteSnippetCode(SnippetCode snippetCode) throws InstanceNotFoundException;
 
     void addNewSnippet() throws DuplicateName;
+
+    void updateSnippet(Snippet snippet) throws InstanceNotFoundException,
+            DuplicateName;
 }
