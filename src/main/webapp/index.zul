@@ -46,7 +46,15 @@
                             <listheader label="Snippet" />
                         </listhead>
                         <listitem self="@{each='snippet'}" value="@{snippet}">
-                            <listcell label="@{snippet.title}" />
+                           <listcell id="editableListcell">
+                                <label value="@{snippet.title}"
+                                visible="true"/>
+                                <textbox id="editableTextbox"
+                                    value="@{snippet.title}"
+                                    visible="false"
+                                    onOK="controller.updateSnippetTitle(self.parent.parent.value)"
+                                    />
+                            </listcell>
                         </listitem>
                     </listbox>
 
