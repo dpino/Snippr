@@ -34,8 +34,11 @@ import org.springframework.security.core.Authentication;
 import org.zkoss.spring.security.SecurityUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.api.Button;
@@ -70,6 +73,8 @@ public class SnippetCRUDController extends GenericForwardComposer {
 
     private boolean isnewSnippet;
 
+    private Listcell editableListcell;
+
     private Listbox listLabels;
 
     private ILabelModel labelModel;
@@ -86,6 +91,34 @@ public class SnippetCRUDController extends GenericForwardComposer {
         super.doAfterCompose(comp);
         comp.setAttribute("controller", this);
         notificator = Notificator.create(notificationMessage);
+        if (editableListcell != null)
+            editableListcell.addEventListener("onDoubleClick",
+                    new EventListener() {
+                        public void onEvent(Event event) throws Exception {
+                            for (int i = 0; i < listSnippets.getItemCount(); i++) {
+                                Listcell aCell = (Listcell) listSnippets
+                                        .getItemAtIndexApi(i).getChildren()
+                                        .get(0);
+
+                                ((Label) aCell.getChildren().get(0))
+                                        .setVisible(true);
+                                ((Textbox) aCell.getChildren().get(1))
+                                        .setVisible(false);
+                            }
+                            Listcell clickedCell = (Listcell) event.getTarget();
+                            Label lab = (Label) clickedCell.getChildren()
+                                    .get(0);
+                            Textbox tex = (Textbox) clickedCell.getChildren()
+                                    .get(1);
+                            if (lab.isVisible() == true) {
+                                lab.setVisible(false);
+                                tex.setVisible(true);
+                            } else {
+                                lab.setVisible(true);
+                                tex.setVisible(false);
+                            }
+                        };
+                    });
     }
 
     /**
@@ -336,4 +369,18 @@ public class SnippetCRUDController extends GenericForwardComposer {
         return labelModel.getAll();
     }
 
+    /**
+     * Updates the contents of a snippet
+     *
+     * @return
+     */
+    public void updateSnippetTitle(Snippet snippet) {
+        try {
+            snippetModel.setSnippet(snippet);
+            snippetModel.save();
+            Util.reloadBindings(listSnippets);
+        } catch (DuplicateName e) {
+            notificator.error("Duplicated Snippet");
+        }
+    }
 }
