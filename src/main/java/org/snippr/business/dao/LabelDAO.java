@@ -28,9 +28,12 @@ import org.snippr.business.entities.Label;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Iago Lluque <iago.lluque@gmail.com>
+ * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
+ * @version 20120913
  */
 @Repository
 @Scope(BeanDefinition.SCOPE_SINGLETON)
@@ -51,4 +54,15 @@ public class LabelDAO extends GenericDAOHibernate<Label, Long> implements
         return !criteria.list().isEmpty();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Label getByLabelname(String labelname) {
+        Criteria criteria = getSession().createCriteria(Label.class);
+        criteria.add(Restrictions.eq("name", labelname));
+        Label label = null;
+        if (!criteria.list().isEmpty()) {
+            label = (Label) criteria.list().get(0);
+        }
+        return label;
+    }
 }

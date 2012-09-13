@@ -30,7 +30,7 @@
             <!-- Labels -->
             <listbox id="listLabels" model="@{controller.labels}">
                 <listitem self="@{each='label'}" value="@{label}">
-                    <listcell label="@{label.name}" />
+                    <listcell label="@{label.name}" onClick="controller.filterByLabel(self.label)"/>
                 </listitem>
             </listbox>
         </west>
@@ -41,7 +41,7 @@
 
                     <!-- List snippets -->
                     <listbox id="listSnippets"
-                            model="@{controller.snippets}">
+                        model="@{controller.snippets}">
                         <listhead>
                             <listheader label="Snippet" />
                         </listhead>

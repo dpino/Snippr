@@ -79,6 +79,9 @@ public class SnippetCRUDController extends GenericForwardComposer {
 
     private IUserModel userModel;
 
+    // If this property is set only the snippets with this label will be shown
+    private String filterLabel = null;
+
     /*
      * (non-Javadoc)
      *
@@ -122,7 +125,7 @@ public class SnippetCRUDController extends GenericForwardComposer {
     }
 
     /**
-     * Returns the list of Snippets from the database for the logged user
+     * Returns the list of Snippets from the database for the logged user filtered by a label if the user has chosen one
      * @return List<Snippet>
      */
     public Set<Snippet> getSnippets() {
@@ -134,7 +137,12 @@ public class SnippetCRUDController extends GenericForwardComposer {
         catch (InstanceNotFoundException e) {
             e.printStackTrace();
         }
-        return userModel.getSnippets();
+        if (filterLabel == null)    {
+            return userModel.getSnippets();
+        }
+        else    {
+            return userModel.getSnippetsWithLabel(filterLabel);
+        }
     }
 
     /**
@@ -396,4 +404,15 @@ public class SnippetCRUDController extends GenericForwardComposer {
             notificator.error("Duplicated Snippet");
         }
     }
+
+    /**
+     *  Sets the name of the label for filtering the snippets lists
+     *  @param String labelname
+     *  @access public
+     */
+    public void filterByLabel(String labelname) {
+        this.filterLabel = labelname;
+        Util.reloadBindings(listSnippets);
+    }
+
 }

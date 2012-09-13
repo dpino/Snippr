@@ -26,7 +26,8 @@ import org.snippr.business.entities.Label;
 /**
  *
  * @author Iago Lluque <iago.lluque@gmail.com>
- *
+ * @author José Manuel Ciges Regueiro <jmanuel@ciges.net>
+ * @version 20120913
  */
 public interface ILabelDAO extends IGenericDAO<Label, Long> {
 
@@ -34,4 +35,5 @@ public interface ILabelDAO extends IGenericDAO<Label, Long> {
 
     boolean exists(Label label);
 
+    Label getByLabelname(String labelname);
 }
