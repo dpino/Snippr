@@ -21,10 +21,14 @@ package org.snippr.web.model;
 import java.util.List;
 
 import org.hibernate.Hibernate;
+import org.snippr.business.dao.ILabelDAO;
 import org.snippr.business.dao.ISnippetCodeDAO;
 import org.snippr.business.dao.ISnippetDAO;
+import org.snippr.business.dao.IUserDAO;
+import org.snippr.business.entities.Label;
 import org.snippr.business.entities.Snippet;
 import org.snippr.business.entities.SnippetCode;
+import org.snippr.business.entities.User;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +52,17 @@ public class SnippetModel implements ISnippetModel {
     @Autowired
     private ISnippetCodeDAO snippetCodeDAO;
 
+    @Autowired
+    private ILabelDAO labelDAO;
+
+    @Autowired
+    private IUserDAO userDAO;
+
     private Snippet snippet;
+
+    private List<Snippet> snippets;
+
+    private List<Label> labels;
 
     @Override
     @Transactional(readOnly = true)
@@ -149,14 +163,30 @@ public class SnippetModel implements ISnippetModel {
      */
     @Override
     @Transactional
-    public void addNewSnippet() throws DuplicateName {
+    public void addNewSnippet(Label label) throws DuplicateName {
+        User user = userDAO.getCurrentUser();
         snippet = new Snippet();
         snippet.setTitle("New Snippet, please fill it.");
         snippet.setDescription("Add a description here.");
+        snippet.setUser(user);
+        snippet.setLabel(label);
         if (snippetDAO.exists(snippet)) {
             throw new DuplicateName();
         }
         snippetDAO.save(snippet);
+    }
+
+    @Override
+    @Transactional
+    public void addNewLabel() throws DuplicateName {
+        User user = userDAO.getCurrentUser();
+        Label label = new Label();
+        label.setName("<No name>");
+        label.setUser(user);
+        if (labelDAO.exists(label)) {
+            throw new DuplicateName();
+        }
+        labelDAO.save(label);
     }
 
     /**
@@ -170,6 +200,33 @@ public class SnippetModel implements ISnippetModel {
     public void updateSnippet(Snippet snippet)
             throws InstanceNotFoundException, DuplicateName {
         snippetDAO.save(snippet);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Snippet> getSnippetsByLabel(Label label) {
+        User user = userDAO.getCurrentUser();
+
+        if (label == null) {
+            labels = getLabels();
+            if (!labels.isEmpty()) {
+                label = labels.get(0);
+            }
+        }
+
+        if (snippets == null) {
+            snippets = label != null ? snippetDAO.getAllByUser(user) :
+                snippetDAO.getAllByUserAndLabel(user, label);
+        }
+        return snippets;
+    }
+
+    private List<Label> getLabels() {
+        User user = userDAO.getCurrentUser();
+        if (labels == null) {
+            labels = labelDAO.getAllByUser(user);
+        }
+        return labels;
     }
 
 }

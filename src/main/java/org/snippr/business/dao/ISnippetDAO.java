@@ -18,7 +18,12 @@
  */
 package org.snippr.business.dao;
 
+import java.util.List;
+import java.util.Set;
+
+import org.snippr.business.entities.Label;
 import org.snippr.business.entities.Snippet;
+import org.snippr.business.entities.User;
 
 /**
  * Interface for the DAO class of Snippet
@@ -35,5 +40,9 @@ public interface ISnippetDAO extends IGenericDAO<Snippet, Long> {
      * @return
      */
     boolean exists(Snippet snippet);
+
+    List<Snippet> getAllByUser(User user);
+
+    List<Snippet> getAllByUserAndLabel(User user, Label label);
 
 }

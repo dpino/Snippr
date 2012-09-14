@@ -24,8 +24,10 @@ import org.hibernate.criterion.Restrictions;
 import org.snippr.business.entities.User;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.zkoss.spring.security.SecurityUtil;
 
 /**
  *
@@ -36,6 +38,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Scope(BeanDefinition.SCOPE_SINGLETON)
 public class UserDAO extends GenericDAOHibernate<User, Long> implements
         IUserDAO {
+
+    @Override
+    @Transactional(readOnly = true)
+    public User getCurrentUser() {
+        Authentication auth = SecurityUtil.getAuthentication();
+        return getByUsername(auth.getName());
+    }
 
     @Override
     @Transactional(readOnly = true)

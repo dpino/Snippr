@@ -22,6 +22,7 @@ package org.snippr.business.dao;
 import java.util.List;
 
 import org.snippr.business.entities.Label;
+import org.snippr.business.entities.User;
 
 /**
  *
@@ -36,4 +37,7 @@ public interface ILabelDAO extends IGenericDAO<Label, Long> {
     boolean exists(Label label);
 
     Label getByLabelname(String labelname);
+
+    List<Label> getAllByUser(User user);
+
 }

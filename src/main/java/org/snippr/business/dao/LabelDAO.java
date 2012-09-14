@@ -25,6 +25,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.snippr.business.entities.Label;
+import org.snippr.business.entities.User;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -65,4 +66,12 @@ public class LabelDAO extends GenericDAOHibernate<Label, Long> implements
         }
         return label;
     }
+
+    @Override
+    public List<Label> getAllByUser(User user) {
+        Criteria criteria = getSession().createCriteria(Label.class);
+        criteria.add(Restrictions.eq("user", user));
+        return criteria.list();
+    }
+
 }

@@ -29,7 +29,6 @@ import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.snippr.web.common.Notificator;
 import org.snippr.web.common.OnlyOneVisible;
 import org.snippr.web.common.Util;
-import org.snippr.web.model.ILabelModel;
 import org.snippr.web.model.ISnippetModel;
 import org.snippr.web.model.IUserModel;
 import org.springframework.security.core.Authentication;
@@ -39,15 +38,16 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
+import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
-import org.zkoss.zul.api.Button;
-import org.zkoss.zul.api.Grid;
-import org.zkoss.zul.api.Listbox;
-import org.zkoss.zul.api.Textbox;
-import org.zkoss.zul.api.Window;
+import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 
 /**
@@ -60,8 +60,6 @@ public class SnippetCRUDController extends GenericForwardComposer {
     private Notificator notificator;
 
     private Label notificationMessage;
-
-    private ISnippetModel snippetModel;
 
     private Window listWindow;
 
@@ -77,7 +75,11 @@ public class SnippetCRUDController extends GenericForwardComposer {
 
     private Listcell editableListcell;
 
+    private Listbox listLabels;
+
     private IUserModel userModel;
+
+    private ISnippetModel snippetModel;
 
     // If this property is set only the snippets with this label will be shown
     private String filterLabel = null;
@@ -128,21 +130,9 @@ public class SnippetCRUDController extends GenericForwardComposer {
      * Returns the list of Snippets from the database for the logged user filtered by a label if the user has chosen one
      * @return List<Snippet>
      */
-    public Set<Snippet> getSnippets() {
-        Authentication auth = SecurityUtil.getAuthentication();
-        String username = auth.getName();
-        try {
-            userModel.prepareForEdit(username);
-        }
-        catch (InstanceNotFoundException e) {
-            e.printStackTrace();
-        }
-        if (filterLabel == null)    {
-            return userModel.getSnippets();
-        }
-        else    {
-            return userModel.getSnippetsWithLabel(filterLabel);
-        }
+    public List<Snippet> getSnippets() {
+        org.snippr.business.entities.Label label = getSelectedLabel();
+        return snippetModel.getSnippetsByLabel(label);
     }
 
     /**
@@ -248,7 +238,7 @@ public class SnippetCRUDController extends GenericForwardComposer {
             saveButton.setDisabled(true);
             saveandcontinueButton.setDisabled(true);
             snippetCodeGrid.setVisible(false);
-            
+
             showEditWindow("Create a new  snippet");
             isnewSnippet = true;
     }
@@ -334,14 +324,27 @@ public class SnippetCRUDController extends GenericForwardComposer {
         Executions.sendRedirect("/");
     }
 
+    public org.snippr.business.entities.Label getSelectedLabel() {
+        int index = listLabels.getSelectedIndex();
+        if (index != -1) {
+            Listitem item = listLabels.getItemAtIndex(index);
+            return (org.snippr.business.entities.Label) item.getValue();
+        }
+        return null;
+    }
+
     /**
      * Creates a new Snippet with default data
      */
     public void addSnippet() {
+        org.snippr.business.entities.Label label = getSelectedLabel();
+        if (label == null) {
+            return;
+        }
+
         try {
-            snippetModel.addNewSnippet();
+            snippetModel.addNewSnippet(label);
         } catch (DuplicateName e) {
-            // alert();
             try {
                 Messagebox
                         .show("Duplicated Snippet. Please fill the previous default snippet before creating a new one.",
@@ -352,7 +355,20 @@ public class SnippetCRUDController extends GenericForwardComposer {
         }
         Util.reloadBindings(listSnippets);
     }
-    
+
+    public void addLabel() {
+        try {
+            snippetModel.addNewLabel();
+        } catch (DuplicateName e) {
+            try {
+                Messagebox.show("Duplicated Label", "Error", 0,
+                        Messagebox.ERROR);
+            } catch (InterruptedException e1) {
+            }
+        }
+        Util.reloadBindings(listLabels);
+    }
+
     /**
      * Verify if the user can save the new Snippet for enabling the save buttons
      */

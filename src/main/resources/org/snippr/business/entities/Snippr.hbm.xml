@@ -54,12 +54,15 @@
 
         <property name="title" unique="true" />
         <property name="description" />
+
         <set name="snippetCodes" inverse="true" cascade="all-delete-orphan">
             <key column="snippet_id" />
             <one-to-many class="org.snippr.business.entities.SnippetCode" />
         </set>
+
         <many-to-one name="user" class="org.snippr.business.entities.User"
             column="user_id" not-null="true" />
+
         <many-to-one name="label" class="org.snippr.business.entities.Label"
             column="label_id" not-null="true" />
     </class>
@@ -85,6 +88,7 @@
 
         <many-to-one name="user" class="org.snippr.business.entities.User"
             column="user_id" not-null="true" />
+
         <set name="snippets" inverse="true" cascade="all-delete-orphan">
             <key column="label_id" />
             <one-to-many class="org.snippr.business.entities.Snippet" />

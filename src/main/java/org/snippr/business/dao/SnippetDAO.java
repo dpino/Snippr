@@ -23,7 +23,9 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.snippr.business.entities.Label;
 import org.snippr.business.entities.Snippet;
+import org.snippr.business.entities.User;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -56,6 +58,21 @@ public class SnippetDAO extends GenericDAOHibernate<Snippet, Long> implements
         Criteria criteria = getSession().createCriteria(Snippet.class);
         criteria.add(Restrictions.eq("title", snippet.getTitle()));
         return !criteria.list().isEmpty();
+    }
+
+    @Override
+    public List<Snippet> getAllByUser(User user) {
+        Criteria criteria = getSession().createCriteria(Snippet.class);
+        criteria.add(Restrictions.eq("user", user));
+        return criteria.list();
+    }
+
+    @Override
+    public List<Snippet> getAllByUserAndLabel(User user, Label label) {
+        Criteria criteria = getSession().createCriteria(Snippet.class);
+        criteria.add(Restrictions.eq("user", user));
+        criteria.add(Restrictions.eq("label", label));
+        return criteria.list();
     }
 
 }
