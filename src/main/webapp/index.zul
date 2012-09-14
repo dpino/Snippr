@@ -30,7 +30,12 @@
             <!-- Labels -->
             <listbox id="listLabels" model="@{controller.labels}">
                 <listitem self="@{each='label'}" value="@{label}">
-                    <listcell label="@{label.name}" onClick="controller.filterByLabel(self.label)"/>
+                    <listcell id="labelEditableCell">
+                        <label value="@{label.name}" visible="true" onClick="controller.filterByLabel(self.value)"/>
+                        <textbox id="tbLabel" value="@{label.name}"
+                            visible="false"
+                            onOK="controller.updateLabel(self.parent.parent.value)" />
+                    </listcell>
                 </listitem>
             </listbox>
         </west>
@@ -79,6 +84,7 @@
 
     <menupopup id="contextMenuLabels">
         <menuitem label="Add Label" onClick="controller.addLabel()" />
+        <menuitem label="Delete Label" onClick="controller.deleteLabel()" />
     </menupopup>
 
 

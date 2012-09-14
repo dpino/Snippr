@@ -29,6 +29,7 @@ import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.snippr.web.common.Notificator;
 import org.snippr.web.common.OnlyOneVisible;
 import org.snippr.web.common.Util;
+import org.snippr.web.model.ILabelModel;
 import org.snippr.web.model.ISnippetModel;
 import org.snippr.web.model.IUserModel;
 import org.springframework.security.core.Authentication;
@@ -84,6 +85,9 @@ public class SnippetCRUDController extends GenericForwardComposer {
     // If this property is set only the snippets with this label will be shown
     private String filterLabel = null;
 
+    private ILabelModel labelModel;
+    private Listcell labelEditableCell;
+
     /*
      * (non-Javadoc)
      *
@@ -99,9 +103,40 @@ public class SnippetCRUDController extends GenericForwardComposer {
         if (editableListcell != null)
             editableListcell.addEventListener("onDoubleClick",
                     new EventListener() {
+                        @Override
                         public void onEvent(Event event) throws Exception {
                             for (int i = 0; i < listSnippets.getItemCount(); i++) {
                                 Listcell aCell = (Listcell) listSnippets
+                                        .getItemAtIndexApi(i).getChildren()
+                                        .get(0);
+
+                                ((Label) aCell.getChildren().get(0))
+                                        .setVisible(true);
+                                ((Textbox) aCell.getChildren().get(1))
+                                        .setVisible(false);
+                            }
+                            Listcell clickedCell = (Listcell) event.getTarget();
+                            Label lab = (Label) clickedCell.getChildren()
+                                    .get(0);
+                            Textbox tex = (Textbox) clickedCell.getChildren()
+                                    .get(1);
+                            if (lab.isVisible() == true) {
+                                lab.setVisible(false);
+                                tex.setVisible(true);
+                            } else {
+                                lab.setVisible(true);
+                                tex.setVisible(false);
+                            }
+                        };
+                    });
+
+        if (labelEditableCell != null)
+            labelEditableCell.addEventListener("onDoubleClick",
+                    new EventListener() {
+                        @Override
+                        public void onEvent(Event event) throws Exception {
+                            for (int i = 0; i < listLabels.getItemCount(); i++) {
+                                Listcell aCell = (Listcell) listLabels
                                         .getItemAtIndexApi(i).getChildren()
                                         .get(0);
 
@@ -431,4 +466,18 @@ public class SnippetCRUDController extends GenericForwardComposer {
         Util.reloadBindings(listSnippets);
     }
 
+    public void updateLabel(org.snippr.business.entities.Label label) {
+        try {
+            labelModel.setLabel(label);
+            labelModel.save();
+            Util.reloadBindings(listLabels);
+        } catch (DuplicateName e) {
+            notificator.error("Label already exists");
+        }
+    }
+
+    public void deleteLabel() throws InstanceNotFoundException {
+        labelModel.delete(getSelectedLabel());
+        Util.reloadBindings(listLabels);
+    }
 }
