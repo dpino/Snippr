@@ -6,9 +6,11 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.snippr.business.entities.Comment;
+import org.snippr.business.entities.Snippet;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Repository;
 public class CommentDAO extends GenericDAOHibernate<Comment, Long> implements ICommentDAO{
 
 	@Override
+    @Transactional
 	public List<Comment> getAll() {
 		Criteria criteria = getSession().createCriteria(Comment.class);
         criteria.addOrder(Order.asc("id"));
@@ -33,4 +36,13 @@ public class CommentDAO extends GenericDAOHibernate<Comment, Long> implements IC
         criteria.add(Restrictions.eq("id", comment.getId()));
         return !criteria.list().isEmpty();
 	}
+
+    @Override
+    @Transactional
+    public List<Comment> getAllBySnippet(Snippet snippet) {
+        Criteria criteria = getSession().createCriteria(Comment.class);
+        criteria.add(Restrictions.eq("snippet", snippet));
+        return criteria.list();
+    }
+
 }

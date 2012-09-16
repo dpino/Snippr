@@ -1,7 +1,9 @@
 package org.snippr.business.dao;
 
 import java.util.List;
+
 import org.snippr.business.entities.Comment;
+import org.snippr.business.entities.Snippet;
 
 /**
  *
@@ -11,6 +13,9 @@ import org.snippr.business.entities.Comment;
 
 public interface ICommentDAO extends IGenericDAO<Comment, Long>{
 
-	List <Comment> getAll();
+	@Override
+    List <Comment> getAll();
 	boolean exists(Comment comment);
+
+    List<Comment> getAllBySnippet(Snippet snippet);
 }
