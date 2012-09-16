@@ -20,10 +20,10 @@ package org.snippr.web.model;
 
 import java.util.List;
 
+import org.snippr.business.entities.Comment;
 import org.snippr.business.entities.Label;
 import org.snippr.business.entities.Snippet;
 import org.snippr.business.entities.SnippetCode;
-import org.snippr.business.entities.User;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 
@@ -62,5 +62,7 @@ public interface ISnippetModel {
     void addNewLabel() throws DuplicateName;
 
     List<Snippet> getSnippetsByLabel(Label label);
+
+    List<Comment> getComments();
 
 }

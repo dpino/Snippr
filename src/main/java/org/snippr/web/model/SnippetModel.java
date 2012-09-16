@@ -21,10 +21,12 @@ package org.snippr.web.model;
 import java.util.List;
 
 import org.hibernate.Hibernate;
+import org.snippr.business.dao.ICommentDAO;
 import org.snippr.business.dao.ILabelDAO;
 import org.snippr.business.dao.ISnippetCodeDAO;
 import org.snippr.business.dao.ISnippetDAO;
 import org.snippr.business.dao.IUserDAO;
+import org.snippr.business.entities.Comment;
 import org.snippr.business.entities.Label;
 import org.snippr.business.entities.Snippet;
 import org.snippr.business.entities.SnippetCode;
@@ -57,6 +59,9 @@ public class SnippetModel implements ISnippetModel {
 
     @Autowired
     private IUserDAO userDAO;
+
+    @Autowired
+    private ICommentDAO commentDAO;
 
     private Snippet snippet;
 
@@ -140,6 +145,7 @@ public class SnippetModel implements ISnippetModel {
     /**
      * Create a new SnippetCode for this snippet
      */
+    @Override
     @Transactional
     public void addNewSnippetCode()  {
         SnippetCode snippetCode = new SnippetCode();
@@ -150,6 +156,7 @@ public class SnippetModel implements ISnippetModel {
     /**
      * Delete a SnippetCode for this snippet
      */
+    @Override
     @Transactional
     public void deleteSnippetCode(SnippetCode snippetCode) throws InstanceNotFoundException {
         snippet.removeSnippetCode(snippetCode);
@@ -229,4 +236,9 @@ public class SnippetModel implements ISnippetModel {
         return labels;
     }
 
+    @Override
+    public List<Comment> getComments() {
+        List<Comment> comments = commentDAO.getAllBySnippet(this.snippet);
+        return comments;
+    }
 }
