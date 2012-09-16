@@ -3,7 +3,11 @@ package org.snippr.web.model;
 import java.util.List;
 
 import org.snippr.business.dao.ICommentDAO;
+import org.snippr.business.dao.ISnippetDAO;
+import org.snippr.business.dao.IUserDAO;
 import org.snippr.business.entities.Comment;
+import org.snippr.business.entities.Snippet;
+import org.snippr.business.entities.User;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,12 @@ public class CommentModel implements ICommentModel {
 
     @Autowired
     private ICommentDAO commentDAO;
+
+    @Autowired
+    private IUserDAO userDAO;
+
+    @Autowired
+    private ISnippetDAO snippetDAO;
 
     private Comment comment;
 
@@ -49,6 +59,18 @@ public class CommentModel implements ICommentModel {
         if (comment.getId() == null && commentDAO.exists(comment)) {
             throw new DuplicateName();
         }
+        commentDAO.save(comment);
+    }
+
+    @Override
+    @Transactional
+    public void save(Snippet snippet) throws DuplicateName {
+        if (comment.getId() == null && commentDAO.exists(comment)) {
+            throw new DuplicateName();
+        }
+        User user = userDAO.getCurrentUser();
+        comment.setSnippet(snippet);
+        comment.setUser(user);
         commentDAO.save(comment);
     }
 

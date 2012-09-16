@@ -3,6 +3,7 @@ package org.snippr.web.model;
 import java.util.List;
 
 import org.snippr.business.entities.Comment;
+import org.snippr.business.entities.Snippet;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 
@@ -26,5 +27,7 @@ public interface ICommentModel {
     void setComment(Comment comment);
 
     void delete(Comment comment) throws InstanceNotFoundException;
+
+    void save(Snippet snippet) throws DuplicateName;
 
 }
