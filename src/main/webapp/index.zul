@@ -46,7 +46,7 @@
 
                     <!-- List snippets -->
                     <listbox id="listSnippets"
-                        model="@{controller.snippets}">
+                        model="@{controller.snippets}" onSelect="controller.snippetSelected(self)">
                         <listhead>
                             <listheader label="Snippet" />
                         </listhead>
@@ -70,8 +70,18 @@
                             <button id="btnAddCode" label="add code" />
                             <button id="btnAddComment" label="add comment" />
                         </hbox>
-
                         <!-- List code and comments -->
+                        <listbox id="listComments" model="@{controller.comments}">
+                            <listitem  self="@{each='comment'}" value="@{comment}">
+                                <listcell>
+                                        <textbox value="@{comment.text}" />
+                                        <label value="@{comment.email}" />
+                                        <label value="@{comment.url}" />
+                                        <button label="Delete" tooltiptext="Delete"
+                                        onClick="controller.deleteComment(self.parent.parent.value)" />
+                                </listcell>
+                            </listitem>
+                        </listbox>
                     </vbox>
                 </south>
             </borderlayout>

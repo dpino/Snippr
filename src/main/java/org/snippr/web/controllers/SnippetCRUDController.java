@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import org.snippr.business.entities.Comment;
 import org.snippr.business.entities.Snippet;
 import org.snippr.business.entities.SnippetCode;
 import org.snippr.business.exceptions.DuplicateName;
@@ -29,6 +30,7 @@ import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.snippr.web.common.Notificator;
 import org.snippr.web.common.OnlyOneVisible;
 import org.snippr.web.common.Util;
+import org.snippr.web.model.ICommentModel;
 import org.snippr.web.model.ILabelModel;
 import org.snippr.web.model.ISnippetModel;
 import org.snippr.web.model.IUserModel;
@@ -87,6 +89,9 @@ public class SnippetCRUDController extends GenericForwardComposer {
 
     private ILabelModel labelModel;
     private Listcell labelEditableCell;
+
+    private Listbox listComments;
+    private ICommentModel commentModel;
 
     /*
      * (non-Javadoc)
@@ -480,4 +485,26 @@ public class SnippetCRUDController extends GenericForwardComposer {
         labelModel.delete(getSelectedLabel());
         Util.reloadBindings(listLabels);
     }
+
+    public List<Comment> getComments() {
+        return snippetModel.getComments();
+    }
+
+    public Comment getComment() {
+        return commentModel.getComment();
+    }
+
+    public void deleteComment(Comment comment) throws InstanceNotFoundException {
+        commentModel.delete(comment);
+        Util.reloadBindings(listComments);
+    }
+
+    public void snippetSelected(Listbox list) {
+        Listitem listItem = list.getSelectedItem();
+        Snippet snippet = (Snippet) listItem.getValue();
+        snippetModel.setSnippet(snippet);
+        getComments();
+        Util.reloadBindings(listComments);
+    }
+
 }
