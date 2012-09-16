@@ -288,7 +288,7 @@ public class SnippetCRUDController extends GenericForwardComposer {
      * @throws IOException
      */
     public void cancel() throws IOException {
-        Executions.sendRedirect("/snippets/snippets.zul");
+        Executions.sendRedirect("/index.zul");
     }
 
     /**
