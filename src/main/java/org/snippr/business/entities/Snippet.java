@@ -38,6 +38,7 @@ public class Snippet extends BaseEntity {
     private User user ;
 
     private Label label;
+    private Set<Comment> comments;
 
     /**
      * The string which identifies the snippet, what it does.
