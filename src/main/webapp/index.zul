@@ -68,7 +68,8 @@
                     <vbox>
                         <hbox>
                             <button id="btnAddCode" label="add code" />
-                            <button id="btnAddComment" label="add comment" />
+                            <button id="btnAddComment" label="add comment"
+                                    onClick="controller.openCreateCommentForm()"/>
                         </hbox>
                         <!-- List code and comments -->
                         <listbox id="listComments" model="@{controller.comments}">
@@ -82,6 +83,39 @@
                                 </listcell>
                             </listitem>
                         </listbox>
+                        <div id="newComment" visible="false">
+                        <grid fixedLayout="true">
+	                        <columns>
+	                            <column width="200px" />
+	                            <column />
+	                        </columns>
+                        <rows>
+                            <row>
+                                <label value="Comment" />
+                                <textbox width="500px"
+                                    value="@{controller.comment.text}" constraint="no empty" rows="4"/>
+                            </row>
+                            <row>
+                                <label value="Email" />
+                                <textbox width="500px"
+                                    value="@{controller.comment.email}"
+                                    constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address" />
+                            </row>
+                            <row>
+                                <label value="URL" />
+                                <textbox width="500px"
+                                    value="@{controller.comment.url}" />
+                            </row>
+                        </rows>
+                    </grid>
+                    <hbox>
+                       <button label="Save"
+                               onClick="controller.saveComment()" />
+                       <button label="Cancel"
+                               onClick="controller.cancel()" />
+                    </hbox>
+                    </div>
+
                     </vbox>
                 </south>
             </borderlayout>

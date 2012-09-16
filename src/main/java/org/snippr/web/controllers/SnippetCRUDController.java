@@ -42,6 +42,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Listbox;
@@ -92,6 +93,8 @@ public class SnippetCRUDController extends GenericForwardComposer {
 
     private Listbox listComments;
     private ICommentModel commentModel;
+
+    private Div newComment;
 
     /*
      * (non-Javadoc)
@@ -505,6 +508,21 @@ public class SnippetCRUDController extends GenericForwardComposer {
         snippetModel.setSnippet(snippet);
         getComments();
         Util.reloadBindings(listComments);
+    }
+
+    public void openCreateCommentForm() {
+        commentModel.prepareForCreate();
+        newComment.setVisible(true);
+    }
+
+    public void saveComment() throws IOException {
+        try {
+            commentModel.save(snippetModel.getSnippet());
+            newComment.setVisible(false);
+            Util.reloadBindings(listComments);
+        } catch (DuplicateName e) {
+            notificator.error("Duplicated Comment");
+        }
     }
 
 }
