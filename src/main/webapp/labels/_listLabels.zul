@@ -22,24 +22,15 @@
         pageSize="10" fixedLayout="true" width="100%" >
         <columns>
             <column label="Name" sortDirection="ascending" />
-            <column label="Operations" width="20%" />
         </columns>
         <rows>
             <row self="@{each='label'}" value="@{label}"
-                onClick="controller.openEditForm(self.value)">
+                onClick="controller.openSnippetsForm(self.value)">
                 <label value="@{label.name}" />
-                <hbox>
-                    <button label="Edit" tooltiptext="Edit"
-                        onClick="controller.openEditForm(self.parent.parent.value)" />
-                    <button label="Delete" tooltiptext="Delete"
-                        onClick="controller.delete(self.parent.parent.value)" />
-                </hbox>
             </row>
         </rows>
     </grid>
 
     <separator />
-
-    <button label="Add" onClick="controller.openCreateForm()" />
 
 </window>

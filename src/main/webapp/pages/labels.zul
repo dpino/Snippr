@@ -22,9 +22,31 @@
 
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 
+<?component name="list" inline="true" macroURI="/labels/_listLabels.zul"?>
+<?component name="edit" inline="true" macroURI="/labels/_editLabel.zul"?>
+<?component name="snippets" inline="true" macroURI="/labels/_listLabelSnippets.zul"?>
+
 <zk xmlns:w="http://www.zkoss.org/2005/zk/client">
 
     <window self="@{define(content)}" apply="org.snippr.web.controllers.LabelCRUDController">
+
+        <hbox pack="center" width="100%">
+            <label id="notificationMessage" class="notificationMessage"
+                visible="false">
+                <attribute w:name="setValue">
+                    function (value) {
+                       this.$setValue(value);
+                       jq(this).hide().fadeIn('fast');
+                    }
+                </attribute>
+            </label>
+        </hbox>
+
+        <separator />
+
+        <list id="listWindow" />
+        <edit id="editWindow" />
+        <snippets id="snippetsWindow" />
 
     </window>
 

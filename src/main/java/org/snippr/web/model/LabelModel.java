@@ -22,7 +22,11 @@ package org.snippr.web.model;
 import java.util.List;
 
 import org.snippr.business.dao.ILabelDAO;
+import org.snippr.business.dao.ISnippetDAO;
+import org.snippr.business.dao.IUserDAO;
 import org.snippr.business.entities.Label;
+import org.snippr.business.entities.Snippet;
+import org.snippr.business.entities.User;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +42,17 @@ public class LabelModel implements ILabelModel {
     @Autowired
     private ILabelDAO labelDAO;
 
+    @Autowired
+    private ISnippetDAO snippetDAO;
+
+    @Autowired
+    private IUserDAO userDAO;
+
     private Label label;
+
+    private List<Label> labels;
+
+    private List<Snippet> snippets;
 
     @Override
     @Transactional
@@ -75,7 +89,7 @@ public class LabelModel implements ILabelModel {
 
     @Override
     @Transactional
-    public void prepareForEdit(Long id) throws InstanceNotFoundException {
+    public void selectLabel(Long id) throws InstanceNotFoundException {
         label = labelDAO.find(id);
     }
 
@@ -83,4 +97,22 @@ public class LabelModel implements ILabelModel {
     public void setLabel(Label label) {
         this.label = label;
     }
+
+    @Override
+    @Transactional
+    public List<Label> getLabelsByUser() {
+        User user = userDAO.getCurrentUser();
+        if (labels == null) {
+            labels = labelDAO.getAllByUser(user);
+        }
+        return labels;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Snippet> getSnippets() {
+        snippets = snippetDAO.getAllByLabel(label);
+        return snippets;
+    }
+
 }

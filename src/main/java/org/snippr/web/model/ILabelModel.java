@@ -22,6 +22,7 @@ package org.snippr.web.model;
 import java.util.List;
 
 import org.snippr.business.entities.Label;
+import org.snippr.business.entities.Snippet;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 
@@ -37,8 +38,12 @@ public interface ILabelModel {
 
     void prepareForCreate();
 
-    void prepareForEdit(Long id) throws InstanceNotFoundException;
+    void selectLabel(Long id) throws InstanceNotFoundException;
 
     void setLabel(Label label);
+
+    List<Label> getLabelsByUser();
+
+    List<Snippet> getSnippets();
 
 }

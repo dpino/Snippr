@@ -75,4 +75,11 @@ public class SnippetDAO extends GenericDAOHibernate<Snippet, Long> implements
         return criteria.list();
     }
 
+    @Override
+    public List<Snippet> getAllByLabel(Label label) {
+        Criteria criteria = getSession().createCriteria(Snippet.class);
+        criteria.add(Restrictions.eq("label", label));
+        return criteria.list();
+    }
+
 }

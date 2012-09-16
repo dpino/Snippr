@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.snippr.business.entities.Label;
+import org.snippr.business.entities.Snippet;
 import org.snippr.business.exceptions.DuplicateName;
 import org.snippr.business.exceptions.InstanceNotFoundException;
 import org.snippr.web.common.Notificator;
@@ -45,6 +46,8 @@ public class LabelCRUDController extends GenericForwardComposer {
 
     private Window editWindow;
 
+    private Window snippetsWindow;
+
     private Notificator notificator;
 
     private ILabelModel labelModel;
@@ -64,8 +67,12 @@ public class LabelCRUDController extends GenericForwardComposer {
         return labelModel.getLabel();
     }
 
-    private void setTitle(String title) {
-        Tab tab = (Tab) editWindow.getFellowIfAny("tab");
+    public List<Snippet> getSnippets() {
+        return labelModel.getSnippets();
+    }
+
+    private void setTitle(Component window, String title) {
+        Tab tab = (Tab) window.getFellowIfAny("tab");
         if (tab != null) {
             tab.setLabel(title);
         }
@@ -73,20 +80,21 @@ public class LabelCRUDController extends GenericForwardComposer {
 
     private OnlyOneVisible getVisibility() {
         if (visibility == null) {
-            visibility = new OnlyOneVisible(listWindow, editWindow);
+            visibility = new OnlyOneVisible(listWindow, editWindow,
+                    snippetsWindow);
         }
         return visibility;
     }
 
     private void showEditWindow(String title) {
-        setTitle(title);
+        setTitle(editWindow, title);
         Util.reloadBindings(editWindow);
         getVisibility().showOnly(editWindow);
     }
 
     public void openEditForm(Label label) {
         try {
-            labelModel.prepareForEdit(label.getId());
+            labelModel.selectLabel(label.getId());
             showEditWindow(String.format("Edit Label: %s", label.getName()));
         } catch (InstanceNotFoundException e) {
             e.printStackTrace();
@@ -105,7 +113,7 @@ public class LabelCRUDController extends GenericForwardComposer {
     }
 
     public void cancel() throws IOException {
-        Executions.sendRedirect("/labels/labels.zul");
+        Executions.sendRedirect("/pages/labels.zul");
     }
 
     public void saveAndExit() throws IOException {
@@ -127,4 +135,23 @@ public class LabelCRUDController extends GenericForwardComposer {
             notificator.error("Duplicated Label");
         }
     }
+
+    public void openSnippetsForm(Label label) {
+        try {
+            labelModel.selectLabel(label.getId());
+            showSnippetWindow(String.format("Snippets for Label: %s",
+                    label.getName()));
+        } catch (InstanceNotFoundException e) {
+            e.printStackTrace();
+        }
+        showSnippetWindow(String.format("Snippets for Label: %s",
+                label.getName()));
+    }
+
+    private void showSnippetWindow(String title) {
+        setTitle(snippetsWindow, title);
+        Util.reloadBindings(snippetsWindow);
+        getVisibility().showOnly(snippetsWindow);
+    }
+
 }
