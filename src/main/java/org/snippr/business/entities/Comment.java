@@ -76,4 +76,12 @@ public class Comment extends BaseEntity {
 		this.user = user;
 	}
 
+    public Snippet getSnippet() {
+        return snippet;
+    }
+
+    public void setSnippet(Snippet snippet) {
+        this.snippet = snippet;
+    }
+
 }
