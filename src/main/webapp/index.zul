@@ -124,6 +124,7 @@
 
     <menupopup id="contextMenuSnippets">
         <menuitem label="Add Snippet" onClick="controller.addSnippet()" />
+        <menuitem label="Delete Snippet" onClick="controller.deleteSnippet()" />
     </menupopup>
 
     <menupopup id="contextMenuLabels">

@@ -242,6 +242,11 @@ public class SnippetCRUDController extends GenericForwardComposer {
         Util.reloadBindings(listWindow);
     }
 
+    public void deleteSnippet() throws InstanceNotFoundException {
+        snippetModel.delete(getSelectedSnippet());
+        listSnippets.removeItemAt(listSnippets.getSelectedIndex());
+    }
+
     /**
      * Helper function to show edit window
      * @param String title
@@ -372,6 +377,15 @@ public class SnippetCRUDController extends GenericForwardComposer {
         if (index != -1) {
             Listitem item = listLabels.getItemAtIndex(index);
             return (org.snippr.business.entities.Label) item.getValue();
+        }
+        return null;
+    }
+
+    public Snippet getSelectedSnippet() {
+        int index = listSnippets.getSelectedIndex();
+        if (index != -1) {
+            Listitem item = listSnippets.getItemAtIndex(index);
+            return (Snippet) item.getValue();
         }
         return null;
     }
