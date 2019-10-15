@@ -19,7 +19,7 @@
         <testDataSource.user>${dataSource.user}</testDataSource.user>
         <testDataSource.password>${dataSource.password}</testDataSource.password>
         <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
-        <spring-security.version>3.0.5.RELEASE</spring-security.version>
+        <spring-security.version>5.2.0.RELEASE</spring-security.version>
     </properties>
 
     <!-- =================================================================== -->
